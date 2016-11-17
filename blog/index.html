@@ -1,0 +1,31 @@
+---
+layout: default
+title: Hoa M. Le | Blog
+---
+<!--Note: This is my list of blog posts-->
+<h1>Blog</h1>
+<p> The blog posts are categorised into <font face="Lucida Console">[S]</font> - scientific or technical posts; <font face="Lucida Console">[A]</font> - intended for (digital) artists; and <font face="Lucida Console">no prefix</font> - for all audiences
+</p>
+<!--<div style="font-family: 'Lucida Console'" !important>-->
+<div>
+<ul class="posts">
+
+  {% for post in site.posts %}
+    <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}" title="{{ post.title }}">
+        {% if {{post.category | number_of_words}} > 0 %}
+        {% assign cat = {{post.category | upcase}} %}
+        [{{ cat | slice: 0 }}]
+        {% endif %}
+
+        {{ post.title }}</a></li>
+  {% endfor %}
+
+</ul>
+</div>
+<!--<script>-->
+<!--function myFunction() {-->
+    <!--var str = "Hello world!";-->
+    <!--var res = str.substring(1, 4);-->
+    <!--document.getElementById("demo").innerHTML = res;-->
+<!--}-->
+<!--</script>-->

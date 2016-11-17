@@ -1,0 +1,14 @@
+name: Hoa M. Le - The Three Sides
+markdown: kramdown
+# TODO: github flavoured markdown
+highlighter: rouge
+kramdown:
+  # auto_ids:       true
+  # footnote_nr:    1
+  # entity_output:  as_char
+  # toc_levels:     1..6
+  # smart_quotes:   lsquo,rsquo,ldquo,rdquo
+  input:          GFM
+  hard_wrap:      false
+
+permalink: /blog/:year/:month/:day/:title

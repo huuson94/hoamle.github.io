@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<!--BEGIN for mathjax-->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!--END for mathjax-->
+
+<head>
+    <title>{{ page.title }}</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+
+</head>
+
+
+<body>
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <!--<li><a href="/about">About</a></li>-->
+        <li><a href="/project">Projects & Publications</a></li>
+        <li><a href="/talk">Talks & Tutorials</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/gallery">Gallery</a></li>
+    </ul>
+</nav>
+<div class="container">
+
+    {{ content }}
+
+</div>
+
+<footer>
+    <ul>
+        <li><a href="mailto:hoamle@outlook.com">Email</a></li>
+        <li><a href="https://linkedin.com/in/hoamle">LinkedIn</a></li>
+        <li><a href="https://github.com/hoamle">GitHub</a></li>
+    </ul>
+</footer>
+</body>
+
+</html>
