@@ -1,3 +1,9 @@
+---
+layout: post
+title: "Introduction to Machine Learning and Deep Learning"
+date: 2016-01-16
+category: Science
+---
 
 _best view in not-Chrome browsers (Chrome just doesn't like math rendered in Jupyter Notebook)_
 
