@@ -14,7 +14,7 @@ Survey on the attempts to build an AI artist
 
 ## Modern advances 
 
-#### Non-realistic Photo Rendering 
+#### Non Photo-realistic Rendering (NPR)
 - physic-based: NPR book 
 - data-driven: texture/style transfer, e.g. Artomatix (Erric Risser et al), Neural Art (Gatys et al)
 
