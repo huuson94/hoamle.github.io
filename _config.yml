@@ -24,7 +24,7 @@ page:
   extension: md
 editor: gvim
 git:
-  branch: master
+  branch: source  # deploy source code to `source` branch
 transfer:
   command: rsync
   settings: -av
