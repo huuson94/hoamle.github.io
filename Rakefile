@@ -1,3 +1,5 @@
+load './UploadSiteToGitHub.Rakefile'
+
 # == Dependencies ==============================================================
 
 require 'rake'
