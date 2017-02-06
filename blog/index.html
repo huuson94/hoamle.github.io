@@ -1,32 +1,27 @@
 ---
-layout: default
-title: Hoa M. Le | Blog
+layout: full-width
+title: blog
+# Note that this index page uses a full-width layout!
 ---
-<!--Note: This is my list of blog posts-->
-<h1>Blog</h1>
-<p>
-    I enjoy painting as much as I enjoy machine learning/AI. Therefore, the blog posts below are categorised into <font face="Lucida Console">[S]</font> - scientific or technical posts; <font face="Lucida Console">[A]</font> - intended for (digital) artists; and <font face="Lucida Console">no prefix</font> - for all audiences.
-</p>
-<!--<div style="font-family: 'Lucida Console'" !important>-->
-<div>
-<ul class="posts">
 
-  {% for post in site.posts %}
-    <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}" title="{{ post.title }}">
+<h1 class="content-listing-header sans">Articles</h1>
+<p>
+  I enjoy painting as much as I enjoy machine learning/AI. Therefore, the blog posts below are categorised accordingly to their intended audiences: <code>[T]</code> - scientific or technical posts, <code>[A]</code> - for (digital) artists, and <code>no prefix</code> - for all audiences.
+</p>
+<ul class="content-listing ">
+  {% for post in site.posts %}      
+  <li class="listing">
+    <hr class="slender">
+    <a href="{{ post.url | prepend: site.baseurl }}">
+      <body class="contrast">
         {% if {{post.category | number_of_words}} > 0 %}
         {% assign cat = {{post.category | upcase}} %}
-        [{{ cat | slice: 0 }}]
+        <code>[{{ cat | slice: 0 }}]</code>
         {% endif %}
-
-        {{ post.title }}</a></li>
-  {% endfor %}
-
-</ul>
-</div>
-<!--<script>-->
-<!--function myFunction() {-->
-    <!--var str = "Hello world!";-->
-    <!--var res = str.substring(1, 4);-->
-    <!--document.getElementById("demo").innerHTML = res;-->
-<!--}-->
-<!--</script>-->
+        {{ post.title }}
+      </body></a>
+      <br><span class="smaller">{{ post.date | date: "%B %-d, %Y" }}</span>  <br/>
+      <!-- <div>{{ post.excerpt }}</div>  -->
+    </li>
+    {% endfor %}
+  </ul>

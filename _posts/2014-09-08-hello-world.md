@@ -1,16 +1,37 @@
 ---
-layout: post
-title: "Hello world"
-date: 2014-09-08
+layout: page
 ---
+Hello world for the $n+1$ times. This post will serve as drafting page for troubleshooting little obscure problems with the page.
 
-Hello world for the $n+1$ times. This post will serve as drafting page for troubleshooting little obscure problems, such as the inaccurately rendered markdown (in local) below
 
-This ~~is a complex strike through *test ~~with nesting~~ involved* here~~.
+```r
+library(knitr)
+```
 
-$$ n++ \texttt{gone wild}
-$$
+```
+## Warning: package 'knitr' was built under R version 3.3.2
+```
 
-$$
-\begin{align} m_a(t) = \begin{cases} 0, \quad 0 < t < t_a \\ m_a^0 e^{-t/T_{1b}} \text{(pulsed)}, \quad t_a< t< \tau + \Delta t \\ m_a^0 e^{-t_a/T_{1b}} \text{(continuous)} \\ 0, \quad t> t_a + \tau \end{cases} \end{align}
-$$
+```r
+set.seed(123)
+rnorm(5)
+```
+
+```
+## [1] -0.56047565 -0.23017749  1.55870831  0.07050839  0.12928774
+```
+
+Does **knitr** work with Python? Use the chunk option `engine='python'`:
+
+
+```python
+x = 'hello, python world!'
+print(x)
+print(x.split(' '))
+```
+
+```
+## hello, python world!
+## ['hello,', 'python', 'world!']
+```
+

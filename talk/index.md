@@ -1,28 +1,27 @@
 ---
-layout: default
-title: Talks & Tutorials
+layout: page
+title: talks & tutorials
 ---
 
-<div class="talk">
-    <p>The following materials are intended for discussion, training purpose and other
+The following materials are intended for discussion, training purpose and other
         activities at <a
                 href="http://ds.soict.hust.edu.vn">Data Science Lab, HUST</a> (DSLab - formerly
-        known as KDELab) if not stated otherwise.</p>
-    <h2>Introduction to Machine Learning and Deep Learning</h2>
-    <p>Training sessions for new members at DSLab. Pre-requisite for subsequent sessions in <i>Topic
-        models</i> and <i>(supervised) Deep neural networks</i>.
-    </p>
-    <p>Intended learning objectives:
-        understand data analysis and modelling pipeline; fundamentals of machine learning:
-        regression
-        and classification, model formalisation by graphical models, (Bayesian)
-        inference/learning, batch/stochastic gradient descent, (non)-linear classification with
-        neural networks, latent variable models, and overview of approximate posterior
-        inference.</p>
-    [<a href="https://github.com/hoamle/PRML/blob/master/course_notes.ipynb">Course Notes</a>] (to be finalised)
+        known as KDELab) if not stated otherwise.
 
+### Essence of Machine Learning (and Deep Learning)
+{% marginfigure 'mf-id-1' 'assets/img/rhino.png' '*TODO* [[Read more](/articles/16/essence-machine-deep-learning)]'%}
 
-    <h2>Introduction to Data Analytics</h2>
+Training course for new members at DSLab. Pre-requisite for subsequent sessions in *Topic models* and (supervised) *Deep neural networks*. 
+
+*Abstract*. There are literally *hundreds* of Machine Learning (ML) models/algorithms published every year. The field itself is also broad enough, with many sub-areas that require in-depth pre-requisites. While the current wave of AI/ML has brought up numbers of ML study materials to wider audience than ever, it also create lots of noises, e.g. "sensational science" reads from mainstream articles and online discussion, or redundant "how-to" tutorials which usually neglect question "why". All of these may hinder aspiring starters who want to *get serious* on ML (and understand what Deep Learning - DL is and does exactly), making their learning pace not optimal.
+
+This short course aims to introduce new starters to the field of ML with a principled approach, so that ones can understand the motivation and intuition behind ML (and eventually DL) concepts,  later learn advanced materials more efficiently, catch up with recent advances in the field, and be ready to do ML research and/or industrial applications.
+
+[[Read more](/articles/16/essence-machine-deep-learning)] 
+
+<div class="talk">
+
+    <h3>Introduction to Data Analytics</h3>
     <p>
         <small><i>(in Vietnamese)</i></small>
         <br>Data Analytics: cores, pipeline, technical aspects, and applications in daily-life,
@@ -43,7 +42,7 @@ title: Talks & Tutorials
 
     [<a href="https://1drv.ms/b/s!ApOZHae4ogqZ3AJg76xtDPEzSlH-">PDF</a>]
 
-    <h2>How to Deliver an Effective Presentation</h2>
+    <h3>How to Deliver an Effective Presentation</h3>
     <p>
         <small><i>(in Vietnamese)</i></small>
         <br>Originally intended for undergraduate students who were about to defend their
@@ -51,15 +50,15 @@ title: Talks & Tutorials
     </p>
     [<a href="https://1drv.ms/p/s!ApOZHae4ogqZtGazlo8hNQJXpuwn">PPTX</a>]
 
-    <h2>Reading Seminar: Deep Neural Networks</h2>
-    <p>Part of the bi-weekly seminars at DSLab. Introduce Deep learning, recent advances,
+    <h3>Deep Neural Networks</h3>
+    <p>Reading seminar at DSLab. Introduce Deep learning, recent advances,
         fundamentals of neural networks, and a ConvNet case-study with multi-label image
         classification.
     </p>
     [<a href="https://1drv.ms/b/s!ApOZHae4ogqZ3Uyd2rpWo3g-4xYA">PDF</a>]
 
-    <h2>Reading Seminar: Overview of Machine Learning in Bioinformatics</h2>
-    <p>Part of the bi-weekly seminars at DSLab. Present the role of machine learning in working
+    <h3>Overview of Machine Learning applications in  Bioinformatics</h3>
+    <p>Seminar at DSLab. Present the role of machine learning in working
         with -omic data; an example in cellular pathway inference; and the challenges for
         quantitative approach in molecular biology.
     </p>

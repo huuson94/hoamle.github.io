@@ -2,7 +2,7 @@
 layout: post
 title: "Simple Language Model"
 date: 2015-07-21
-category: Science
+category: Technical
 ---
 
 This is an implementation of Geoffrey Hinton\'s Neural Networks Programming Assigment 2 on [Coursera](https://www.coursera.org/course/neuralnets) in Python with GPU support by Theano. The assignment was about training a feed-forward neural networks, in order to predict the next word from 3 previous words. Training took ~10s/epoch with default parameters on a GTX 660 GPU. On the other hand, training took ~100s/epoch on a Core 2 Duo E7300 @2.67GHz CPU with the original Octave/MATLAB implementation (10x slower!). 

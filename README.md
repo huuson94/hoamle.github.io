@@ -1,1 +1,1 @@
-Data for personal Jekyll website. Built upon the data that accompanied [step-by-step beginners guide](http://jmcglone.com/guides/github-pages) by [Jonathan McGlone](http://jmcglone.com). 
+Data for personal Jekyll website. Customized from <a href="//github.com/clayh53/tufte-jekyll">Tufte theme for {{site.subtitle}} </a> in <a href="//jekyllrb.com">Jekyll</a>. 
