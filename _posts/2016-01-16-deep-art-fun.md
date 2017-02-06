@@ -50,7 +50,7 @@ Style image: [creativemints](https://www.behance.net/gallery/13033419/Selected-A
 <br/>
 <img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/potr-lostquilt.png" width="410"> produced by NIN model @512px
 <br/>
-<img src="/assets/img/lostquilt.png" width="410"> produced by VGG-19 model @784px
+<img src="assets/img/lostquilt.png" width="410"> produced by VGG-19 model @784px
 
 <!--Style image: Picasso\'s Self-portrait-->
 <!--<br/>-->
