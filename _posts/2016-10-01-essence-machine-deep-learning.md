@@ -4,23 +4,21 @@ title: "Essence of Machine Learning (and Deep Learning)"
 date: 2016-10-01
 category: Technical
 ---
-Training course for new members at DSLab. Pre-requisite for subsequent sessions in *Topic models* and (supervised) *Deep neural networks*. 
+Preliminary course for new members at DSLab. Pre-requisite for courses in *Topic models* and (supervised) *Deep neural networks*. 
 
-*Abstract*. There are literally *hundreds* of Machine Learning (ML) models/algorithms published every year. The field itself is also broad enough, with many sub-areas that require in-depth pre-requisites. While the current wave of AI/ML{% sidenote 'sn-mainstream' '(Deep Learning says "Hi")'%} has brought up numbers of ML study materials to wider audience than ever, it also create lots of noises, e.g. "sensational science" reads from mainstream articles and online discussion, or redundant "how-to" tutorials which usually neglect question "why". All of these may hinder aspiring starters who want to *get serious* on ML (and understand what Deep Learning - DL is and does exactly), making their learning pace not optimal.
+This short course aims to introduce new starters to the field of *Machine Learning* (ML) with a principled approach, so that ones can understand the motivation and intuition behind ML (and eventually *Deep Learning* - DL) concepts,  later learn advanced materials \*efficiently\*, catch up with recent advances in the field, and be ready to do ML research and/or industrial applications.
 
-This short course aims to introduce new starters to the field of ML with a principled approach, so that ones can understand the motivation and intuition behind ML (and eventually DL) concepts,  later learn advanced materials more efficiently, catch up with recent advances in the field, and be ready to do ML research and/or industrial applications.
+*Intended learning objectives*: (i) understand and know what constitute of the high-level ML concepts below; (ii) be able to navigate new ML concepts in [the Map of Machine Learning](#map); (iii) - *optionally* - articulate the math behind each model or concept, and implement the ML models/algorithms covered in the course properly (expected from students who do the homework and ["Study-group" sessions](#study))
 
-*Intended learning objectives*: (i) understand and know what constitute of the high-level ML concepts below; (ii) be able to navigate new ML concepts in the [map of Machine Learning](#){% marginnote 'mn-map' 'TODO' %}; (iii) - *optionally* - articulate the math behind each model or concept, and implement them properly (expected from students who do the homework and join practical sessions)
-
-## Core ML concepts
-We will cover the following concepts (in ***bold italic***). Links to relevant [course notes]() to be updated. 
+## <a name="map">Core ML concepts</a>
+{% marginnote 'mn-map' 'TODO draw the Map' %} We will cover the following *high-level* concepts (*note*: if not stated otherwise, concepts in ***bold italic*** are covered in the prelim course. [Course notes](#) will be updated in respective blog posts). 
 
 ### Build a Machine Learning model
-Principles of building a model
+**Design principle**: 
 
-***Design***: Model {% sidenote 'sn-model' 'Formulate real-life problems as ***parametric models*** (non-parametric models/methods are not covered in this course)' %} = Data Type + Model "Structure"{% sidenote 'sn-structure' 'Relationships between model variables and parameters.  Relationships can either be *deterministic* or *stochastic*, and are visualized graphically by ***graphical models***.' %} + Learning Framework{% sidenote 'sn-framework' 'Examples: ***probabilistic modelling***, *metric learning* (not covered in this course)' %}
+> Model {% sidenote 'sn-model' '*"Model is a simplification of reality"*. Formulate real-life problems as ***parametric models*** (non-parametric models/methods are not covered in this training course series)' %} = Data Type + Model "Structure"{% sidenote 'sn-structure' 'Relationships between model variables and parameters.  Relationships can either be *deterministic* or *stochastic*, and are visualized graphically by ***graphical models***.' %} + Learning Framework{% sidenote 'sn-framework' 'Examples: ***probabilistic modelling***, *metric learning* (not covered in prelim course)' %}
 
-***Tasks***: Learning task and Inference task(s){% sidenote 'sn-estimate' 'Find/compute parameter point estimates (***learning task***) and other unknown quantities of interest (***inference tasks***), e.g. predicted outcome of a coin toss, full posterior distribution of model parameters' %} 
+***Learning task*** and ***Inference task(s)***{% sidenote 'sn-estimate' 'Find/compute *unknown* parameter and/or ***latent variable*** estimates (*learning task*) of the model, and other quantities of interest (*inference tasks*), e.g. predictive outcomes, posterior distribution of model parameters, etc.' %} 
 
 ### Evaluate performance of a model
 
@@ -28,18 +26,30 @@ Principles of building a model
 
 ***Analyze results***: are the results meaningful{% sidenote 'sn-meaningful' 'in terms of *statistical* significance, interpretability, or interesting observation' %}  and legitimate{% sidenote 'sn-analyze' 'We will touch on ***experimental design***' %}? 
 
-***Model selection***: which model to choose from, given a set of models with similar performance?
+### Regularize a model
+`>` to fight ***overfitting*** issue. Example approaches: weight penalty, ***Bayesian modelling***{% sidenote 'sn-bayes' 'We will also see Bayesian modelling, and eventually *Bayesian inference*, when building ***generative models*** for clustering problem' %}, Early-stopping, Data augmentation, Dropout; or
 
-### Fight overfitting
-To avoid low performance on unseen data examples. Example approaches: ***weight penalty***, ***Bayesian modelling***{% sidenote 'sn-bayes' 'We will also see Bayesian modelling, and eventually *Bayesian inference*, when building a generative model to cluster data' %}, *Dropout*, *Data augmentation* (not covered in this course)
+`>` to achieve some interpretability via *sparsity*{% sidenote 'sn-sparse' "covered in Topic Models course" %}; or
+
+`>` to achieve [other objectives](https://en.wikipedia.org/wiki/Regularization*(mathematics)).
+
+### Optimize for more performance
+***Model selection*** and ***Model ensemble*** techniques
+
+
 
 ## References
+Course content is partially taken from the following sources:
 
-> Christopher Bishop's [Pattern Recognition and Machine Learning ](https://www.amazon.com/Pattern-Recognition-Learning-Information-Statistics/dp/0387310738)
+> Andrew Ng's Machine Learning class ([Coursera](https://www.coursera.org/learn/machine-learning) or [CS229](http://cs229.stanford.edu/)) <- Practical introduction to Machine Learning and common learning algorithms.
 
-> Andrew Ng's Machine Learning classes on [Coursera](https://www.coursera.org/learn/machine-learning) and [CS229](http://cs229.stanford.edu/)
+> Christopher Bishop's [Pattern Recognition and Machine Learning](https://www.amazon.com/Pattern-Recognition-Learning-Information-Statistics/dp/0387310738) <- Comprehensive textbook on Probabilistic modelling.
 
-> [Shakir Mohamed](http://shakirm.com/?section=3)'s tutorial on Deep Generative Models in Deep Learning Summer School, August 2016
+> Stanford Univ's [CS231n - ConvNet for Visual Recognition](http://cs231n.stanford.edu/) <- Practical course on Deep neural networks (DNN) with the context of computer vision problems.
 
-> Stanford Univ's [CS231n - ConvNet for Visual Recognition](http://cs231n.stanford.edu/)
+> [Shakir Mohamed](http://shakirm.com/?section=3)'s tutorial on Deep Generative Models in Deep Learning Summer School, 2016 <- Terrific summary of modelling principles and categorization of model classes. Also introduce recent advances in marrying Probabilistic modelling with DNN. 
 
+
+## <a name="study">Course logistics</a>
+(i) 2 sessions/week: 1x "Lecture" session + 1x optional "Study-group" session.
+(ii) Use comment sections in relevant blog posts for questions and discussion if possible. Use email as secondary option.

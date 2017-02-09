@@ -1,7 +1,13 @@
 ---
 layout: page
 ---
-Hello world for the $n+1$ times. This post will serve as drafting page for troubleshooting little obscure problems with the page.
+Hello world for the $n+1$ times. This post will serve as a repo for troubleshooting blogging problems.
+
+### Convert between different sources
+* HTML to MarkDown: `pandoc input.html -o output.md --parse-raw`
+
+### Markdown editors
+[`MarkdownEditting`](https://github.com/SublimeText-Markdown/MarkdownEditing) for Sublime Text
 
 
 ```r

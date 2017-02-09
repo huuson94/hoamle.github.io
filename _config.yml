@@ -1,6 +1,6 @@
 baseurl:
 url: "http://hoamle.github.io" # the base hostname & protocol for your site
-title: Hoa M. Le
+title: Hoa M. Le's Personal site
 subtitle:
 author: Hoa M. Le
 simple_search: http://google.com/search
@@ -14,7 +14,7 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 highlighter: rouge
 permalink: /articles/:short_year/:title
 timezone: America/New_York
-# excerpt_separator: <!--more-->  # you can specify your own separator, of course.
+excerpt_separator: "" # <!--more-->  # you can specify your own separator, of course.
 exclude: ['Gemfile', 'Gemfile.lock', 'Rakefile', 'README.md']
 post:
   template: _post.txt
@@ -24,7 +24,7 @@ page:
   extension: md
 editor: gvim
 git:
-  branch: source  # deploy source code to `source` branch
+  branch: source  # deploy source to `source`, locally published site to `master`
 transfer:
   command: rsync
   settings: -av

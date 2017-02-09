@@ -2,5 +2,5 @@
   icon: icon-googleplus
 - link: //github.com/hoamle 
   icon: icon-github
-- link: /feed 
+- link: /feed.xml
   icon: icon-feed
