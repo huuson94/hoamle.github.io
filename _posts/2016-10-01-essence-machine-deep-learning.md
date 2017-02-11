@@ -16,7 +16,7 @@ This short course aims to introduce new starters to the field of *Machine Learni
 ### Build a Machine Learning model
 **Design principle**: 
 
-> Model {% sidenote 'sn-model' '*"Model is a simplification of reality"*. Formulate real-life problems as ***parametric models*** (non-parametric models/methods are not covered in this training course series)' %} = Data Type + Model "Structure"{% sidenote 'sn-structure' 'Relationships between model variables and parameters.  Relationships can either be *deterministic* or *stochastic*, and are visualized graphically by ***graphical models***.' %} + Learning Framework{% sidenote 'sn-framework' 'Examples: ***probabilistic modelling***, *metric learning* (not covered in prelim course)' %}
+> Model {% sidenote 'sn-model' '*"Model is a simplification of reality"*. Formulate real-life problems as ***parametric models*** (non-parametric models/methods are not covered in this training course series)' %} = Data Type + Model "Structure"{% sidenote 'sn-structure' 'Relationships between model elements: data, parameters, and hyperparameters.  Relationships can either be *deterministic* or *stochastic*, and are visualized graphically by ***graphical models***.' %} + Learning Framework{% sidenote 'sn-framework' 'Examples: ***probabilistic modelling***, *metric learning* (not covered in prelim course)' %}
 
 ***Learning task*** and ***Inference task(s)***{% sidenote 'sn-estimate' 'Find/compute *unknown* parameter and/or ***latent variable*** estimates (*learning task*) of the model, and other quantities of interest (*inference tasks*), e.g. predictive outcomes, posterior distribution of model parameters, etc.' %} 
 
@@ -53,3 +53,9 @@ Course content is partially taken from the following sources:
 ## <a name="study">Course logistics</a>
 (i) 2 sessions/week: 1x "Lecture" session + 1x optional "Study-group" session.
 (ii) Use comment sections in relevant blog posts for questions and discussion if possible. Use email as secondary option.
+(iii) Lectures are meant to lead you in the right direction --- just 
+to get your started
+• They are not meant to tell you everything
+• You should utilize the reference reading materials
+• You should utilize the CAs, your classmates, online resources, and your 
+imagination…

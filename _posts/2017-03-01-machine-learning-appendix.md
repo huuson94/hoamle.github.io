@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: post
 title: "Machine learning appendix"
 date: 2017-03-01
 category: Technical
@@ -11,7 +11,7 @@ _(to be updated sporadically)_
 ## <a href="glossary">Glossary of common terms and notations</a>
 Each row lists the terms that are _synonyms_ (or <em><font color="red">strongly related</font></em>)
 
-> `>` For brevity, we write $$\text{Pr}\left(x\right)$$, instead of $$\text{Pr}\left(X=x\right)$$ as normally seen in statistical texts. In ML literature, we often reserve captial letters eg. $$X$$ for writing matrices. 
+> `>` For brevity, we write $$\text{Pr}\left(x\right)$$, instead of $$\text{Pr}\left(X=x\right)$$ as normally seen in statistical texts. Nevertheless, we should not do so when working on e.g. theoretical foundation of model robustness to avoid confusion.
 
 | Term | Common notations and more information (if any)|
 |:---- |:-----------------------|
@@ -28,8 +28,8 @@ Each row lists the terms that are _synonyms_ (or <em><font color="red">strongly 
 | neuron/unit; <font color="red">related</font>: dimension (of a vector) | $$x_{d}$$ where $$d$$ is a dimesion of vector $$x$$|
 | *nơ-ron, chiều (của một vec-tơ)* |  |
 | feature; <font color="red">related</font>: independent variable, explanatory variable | $$x$$  |
-| *đặc trưng, biến độc lập, biến giải thích, nhân tố giải thích* | |
-| mid-/high-level feature, hidden/latent variable; <font color="red">related</font>: hidden neuron**s**/unit**s** | $$z$$ ; or $$h$$ |
+| *đặc trưng, biến độc lập, biến giải thích, nhân tố giải thích* |  |
+| mid-/high-level feature, hidden/latent variable; <font color="red">related</font>: hidden neuron**s**/unit**s** | $$z$$ ; or $$h$$ ; or $$\theta$$ if assumed a random variable |
 | *đặc trưng bậc trung hoặc bậc cao, biến ẩn, các nơ-ron ẩn* | |
 | target, label; <font color="red">related</font>: dependent variable, response variable | $$y$$ ; or $$t$$ |
 | *mục tiêu, nhãn, biến phụ thuộc, biến (?)* | |

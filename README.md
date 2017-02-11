@@ -1,1 +1,3 @@
-Data for personal Jekyll website. Customized from <a href="//github.com/clayh53/tufte-jekyll">Tufte theme </a> in <a href="//jekyllrb.com">Jekyll</a>. 
+Data for personal Jekyll website. Customized from <a href="//github.com/clayh53/tufte-jekyll">Tufte theme </a> in <a href="//jekyllrb.com">Jekyll</a>. `master` branch only host locally published version of this site, while `source` hosts version history of the jekyll's "source".
+
+This theme (`tufte-jekyll`) uses *lots* of custom Liquid tags. Github Pages does not support the custom tags, unless the site is published as a project's `docs` (i.e. pushed to `gh-pages` branch of the project). If it is the case, the site root would be `USERNAME.github.io/project-repo/`. I want to retain ``USERNAME.github.io/` as my root, thus the branching above.
