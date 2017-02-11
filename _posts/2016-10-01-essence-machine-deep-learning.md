@@ -4,7 +4,7 @@ title: "Essence of Machine Learning (and Deep Learning)"
 date: 2016-10-01
 category: Technical
 ---
-Preliminary course for new members at DSLab. Pre-requisite for courses in *Topic models* and (supervised) *Deep neural networks*. 
+Preliminary course for new members at DSLab-HUST. Pre-requisite for courses in *Topic models* and (supervised) *Deep neural networks*. 
 
 This short course aims to introduce new starters to the field of *Machine Learning* (ML) with a principled approach, so that ones can understand the motivation and intuition behind ML (and eventually *Deep Learning* - DL) concepts,  later learn advanced materials \*efficiently\*, catch up with recent advances in the field, and be ready to do ML research and/or industrial applications.
 
@@ -51,11 +51,11 @@ Course content is partially taken from the following sources:
 
 
 ## <a name="study">Course logistics</a>
-(i) 2 sessions/week: 1x "Lecture" session + 1x optional "Study-group" session.
-(ii) Use comment sections in relevant blog posts for questions and discussion if possible. Use email as secondary option.
-(iii) Lectures are meant to lead you in the right direction --- just 
-to get your started
-• They are not meant to tell you everything
-• You should utilize the reference reading materials
-• You should utilize the CAs, your classmates, online resources, and your 
-imagination…
+2 sessions/week: 1x "**Lecture**" session + 1x optional "**Study-group**" session.
+`>` ***Lectures*** are meant to lead you in the right direction --- just to get your started. They are **not** meant to tell you *everything* in *every details*. 
+
+> Therefore you should utilize the reference reading materials, online resources for missing details *<- (the role of **self-study**)*
+
+`>` It is a good attitude to reckon that we do not know everything (in *many cases*, we don't even know what we don't know), so utilize the course instructors, the Teaching Assistant - TAs, your classmates for further support/discussion/...  *<- (the importance of **Study-group**)* 
+
+> **Tip**: Use comment sections in *relevant* blog posts to reach this course instructor(s). The advantage: other audience (e.g. TAs, classmates, passing-by experts) can also contribute to your questions or discussion. Use email as secondary option.
