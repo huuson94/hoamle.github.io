@@ -8,7 +8,7 @@ For personal use, but suggestions are highly appreciated.
 _(to be updated sporadically)_
 <!--more-->
 
-## <a href="glossary">Glossary of common terms and notations</a>
+## <a href="#glossary">Glossary of common terms and notations</a>
 Each row lists the terms that are _synonyms_ (or <em><font color="red">strongly related</font></em>)
 
 > `>` For brevity, we write $$\text{Pr}\left(x\right)$$, instead of $$\text{Pr}\left(X=x\right)$$ as normally seen in statistical texts. Nevertheless, we should not do so when working on e.g. theoretical foundation of model robustness to avoid confusion.
@@ -27,8 +27,8 @@ Each row lists the terms that are _synonyms_ (or <em><font color="red">strongly 
 | *hàm tính điểm, hàm liên kết* |  |
 | neuron/unit; <font color="red">related</font>: dimension (of a vector) | $$x_{d}$$ where $$d$$ is a dimesion of vector $$x$$|
 | *nơ-ron, chiều (của một vec-tơ)* |  |
-| feature; <font color="red">related</font>: independent variable, explanatory variable | $$x$$  |
-| *đặc trưng, biến độc lập, biến giải thích, nhân tố giải thích* |  |
+| feature; <font color="red">related</font>: independent variable, explanatory variable, predictor | $$x_{d}$$ where $$d$$ is a dimesion of vector $$x$$. <font color="red">note</font>: in practice, most of the time we imply `feature` as `feature vector`, thus use vector $$x$$ instead  |
+| *vec-tơ đặc trưng, biến độc lập, biến giải thích, nhân tố giải thích* |  |
 | mid-/high-level feature, hidden/latent variable; <font color="red">related</font>: hidden neuron**s**/unit**s** | $$z$$ ; or $$h$$ ; or $$\theta$$ if assumed a random variable |
 | *đặc trưng bậc trung hoặc bậc cao, biến ẩn, các nơ-ron ẩn* | |
 | target, label; <font color="red">related</font>: dependent variable, response variable | $$y$$ ; or $$t$$ |
@@ -37,8 +37,8 @@ Each row lists the terms that are _synonyms_ (or <em><font color="red">strongly 
 |*dữ liệu/biến quan sát được (đã biết)* | |
 | unobserved data/variable(s) | $$\tilde{\mathcal{D}}$$ ; or $$\tilde{\mathcal{x}}$$ ; or $$x'$$ ; or $$x^{\left(\text{new}\right)}$$ |
 | *dữ liệu/biến không quan sát được (chưa biết)* | |
-| data point | $$x$$ ; or (if working with more than 1 data point) |
-| *điểm dữ liệu* | $$x^{\left(n\right)}$$, or $$x_{n}$$ if $$x$$ represents a set of data points |
+| data point | $$x$$ ; or (if working with more than 1 data point) $$x^{\left(n\right)}$$, or $$x_{n}$$ if $$x$$ represents a set of data points |
+| *điểm dữ liệu* |  |
 | parameter; <font color="red">related</font>: weight, bias (as the "offset" from the origin) | $$\theta$$ , $$W$$, $$b$$ respectively |
 | *tham số, trọng số, độ lệch* | <font color="red">note</font>: `bias` is an [umbrella term](https://en.wikipedia.org/wiki/Umbrella_term) |
 | | `bias` has more [common meanings](https://en.wikipedia.org/wiki/Bias_(statistics)) |
