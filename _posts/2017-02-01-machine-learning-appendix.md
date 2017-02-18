@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Machine learning appendix"
-date: 2017-03-01
-category: Technical
+date: 2017-02-01
+category: technical
 ---
 For personal use, but suggestions are highly appreciated.
 _(to be updated sporadically)_
@@ -21,7 +21,7 @@ Each row lists the terms that are _synonyms_ (or <em><font color="red">strongly 
 | *hàm mục tiêu, hàm lỗi, hàm tổn thất, hàm chi phí* |  |
 | learning, training; <font color="red">related</font>:  parameter estimation | |
 | *học mô hình, huấn luyện mô hình, ước lượng tham số* |  |
-| evaluating, forward pass - *as in* "computing some quantity given estimates of all unknown quantities" | 
+| evaluating, forward pass - *as in* "computing some quantity given estimates of all unknown quantities" | <font color="red">note</font>: not to be confused with `performance evaluation`
 | *tính toán, chiều xuôi*  | |
 | score function; <font color="red">related</font>: (inverse) link function | $$s\left(\cdot\right)$$ ; or $$g\left(\cdot\right)$$ if link function |
 | *hàm tính điểm, hàm liên kết* |  |

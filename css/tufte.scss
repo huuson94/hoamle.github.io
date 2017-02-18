@@ -76,10 +76,10 @@ p > a { @if $link-style == underline
     }
   }
 
-body { width: 95%;
+body { width: 92.5%;
        margin-left: auto;
        margin-right: auto;
-       padding-left: 5%;
+       padding-left: 7.5%;
        font-family: et-bembo, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
        background-color: $bg-color;
        color: $text-color;
@@ -143,8 +143,10 @@ blockquote footer { width: 45%;
 
 pre, pre code, p code, p pre code { font-family: $code-font;  // removed .code 'class' since code is an actual html tag
         font-size: 1.2rem;                   // also added p code, p pre code and pre selector to account for Markdown parsing
-        line-height: 1.71428571;        // of triple backticks plus rationalized line-heights and margins
-        margin-top: 1.71428571rem; }
+        /*line-height: 1.71428571;        // of triple backticks plus rationalized line-heights and margins*/
+        margin-top: 1.71428571rem;
+        background-color: rgb(239,240,241);  // background color for code block: light gray (user comment)
+      }
 
 
 h1 code, h2 code, h3 code { font-size: 0.80em; } //left in for no real reason
@@ -219,21 +221,21 @@ ul,ol { width: 68%;
 
 //li { padding: 0.5em 0; } //vertical padding on list items screws up vertical rhythym
 
-figure, figure img.maincolumn { max-width: 55%;
+figure, figure img.maincolumn { max-width: 70%;  // figure width (user comment)
          -webkit-margin-start: 0;
          -webkit-margin-end: 0;
          margin-bottom: 3em; }
 
 figcaption { float: right;
              clear: right;
-             margin-right: -48%;
+             margin-right: -32%;  // figurecaption margin, see .marginnote setting (user comment)
              margin-top: 0;
              margin-bottom: 0;
              font-size: 1.0rem;
              line-height: 1.6;
              vertical-align: baseline;
              position: relative;
-             max-width: 40%; }
+             max-width: 30%; }
 
 figure.fullwidth figcaption { float: left; margin-right: 0%; margin-left: 36%; }
 
@@ -271,7 +273,7 @@ blockquote .sidenote, blockquote .marginnote { margin-right: -35.5% }  // fix si
                    color: $contrast-color;
                    top: 0rem; } //removed superscripting for numerical reference in sidenote
 
-p, footer, div.table-wrapper, div.mathblock{ width: 75%; } // maincolumn content width
+p, footer, div.table-wrapper, div.mathblock{ width: 73.5%; } // maincolumn content width (user comment)
 
 div.table-wrapper { overflow-x: auto; } //changed all overflow values to 'auto' so scroll bars appear only as needed
 
@@ -288,8 +290,8 @@ div.table-wrapper { overflow-x: auto; } //changed all overflow values to 'auto' 
 
 .marginnote code, .sidenote code { font-size: 1rem; } //more .code class removal
 
-pre, pre code, p pre code { width: 52.5%;
-           padding-left: 2.5%;
+pre, pre code, p pre code { width: 70.5%;
+           /*padding-left: 2.5%;*/
            overflow-x: auto; }
 
 .fullwidth, li.listing div{ max-width: 90%; }
@@ -398,10 +400,10 @@ ul.footer-links li{
 
 //Full width page styling stuff
 
-body.full-width, .content-listing, ul.content-listing li.listing{ width: 90%;
+body.full-width, .content-listing, ul.content-listing li.listing{ width: 92.5%;  // user settings
        margin-left: auto;
        margin-right: auto;
-       padding: 0% 5%;
+       padding: 0% 7.5%;  // user settings
 
 }
 .full-width article p{

@@ -2,7 +2,7 @@
 layout: post
 title: "Essence of Machine Learning (and Deep Learning)"
 date: 2016-10-01
-category: Technical
+category: technical
 ---
 Preliminary course for new members at DSLab-HUST. Pre-requisite for courses in *Topic models* and (supervised) *Deep neural networks*. 
 
@@ -56,6 +56,6 @@ Course content is partially taken from the following sources:
 
 > Therefore you should utilize the reference reading materials, online resources for missing details *<- (the role of **self-study**)*
 
-`>` It is a good attitude to reckon that we do not know everything (in *many cases*, we don't even know what we don't know), so utilize the course instructors, the Teaching Assistant - TAs, your classmates for further support/discussion/...  *<- (the importance of **Study-group**)* 
+`>` It should be reckoned that we do not know everything (in *many cases*, we don't even know what we don't know), so utilize the course instructors, the Teaching Assistant - TAs, your classmates for further support/discussion/...  *<- (the importance of **Study-group**)* 
 
 > **Tip**: Use comment sections in *relevant* blog posts to reach this course instructor(s). The advantage: other audience (e.g. TAs, classmates, passing-by experts) can also contribute to your questions or discussion. Use email as secondary option.
