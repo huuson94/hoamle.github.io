@@ -11,7 +11,7 @@ This short course aims to introduce new starters to the field of *Machine Learni
 *Intended learning objectives*: (i) understand and know what constitute of the high-level ML concepts below; (ii) be able to navigate new ML concepts in [the Map of Machine Learning](#map); (iii) - *optionally* - articulate the math behind each model or concept, and implement the ML models/algorithms covered in the course properly (expected from students who do the homework and ["Study-group" sessions](#study))
 
 ## <a name="map">Core ML concepts</a>
-{% marginnote 'mn-map' 'TODO draw the Map' %} We will cover the following *high-level* concepts (*note*: if not stated otherwise, concepts in ***bold italic*** are covered in the prelim course. [Course notes](#notes) will be updated in respective blog posts). 
+{% marginnote 'mn-map' 'TODO draw the Map' %} We will cover the following concepts. <font color="red">Note</font>: if not stated otherwise, concepts in ***bold italic*** are covered in the prelim course. [Course notes](#notes) is be expected in respective blog posts. 
 
 ### Build a Machine Learning model
 **Design principle**: Model {% sidenote 'sn-model' '*"Model is a simplification of reality"*. Formulate real-life problems as ***parametric models*** (non-parametric models/methods are not covered in this training course series)' %} = Model "Structure"{% sidenote 'sn-structure' 'Relationships between model elements: data, parameters, and hyperparameters.  Relationships can either be *deterministic* or *stochastic*, and are visualized graphically by ***graphical models***.' %} + Learning Framework{% sidenote 'sn-framework' 'Examples: ***probabilistic modelling***, *metric learning* (not covered in prelim course)' %}
@@ -32,7 +32,7 @@ This short course aims to introduce new starters to the field of *Machine Learni
 `>` to achieve [other objectives](https://en.wikipedia.org/wiki/Regularization*(mathematics)).
 
 ### Optimize for more performance
-***Model selection*** and ***Model ensemble*** techniques
+***Model selection*** and *Model ensemble* techniques
 
 
 
@@ -59,12 +59,12 @@ Course content is partially taken from the following sources:
 > **Tip**: Use comment sections in *relevant* blog posts to reach this course instructor(s). The advantage: other audience (e.g. TAs, classmates, passing-by experts) can also contribute to your questions or discussion. Use email as secondary option.
 
 ## <a name="notes">Course notes</a>
-WEEK 1 - Motivated examples & [Primer on Building a Machine Learning solution](/articles/17/primer-on-building-ml-solutions)
+WEEK 1 - [Introduction](https://raw.githubusercontent.com/hoamle/essence_ml/e788aef7617fed6911bcfd710ebbccd8ed34eae6/essence_ml.pdf) (with [Notes](https://raw.githubusercontent.com/hoamle/essence_ml/e788aef7617fed6911bcfd710ebbccd8ed34eae6/essence_ml_with_notes.pdf)) & [Primer on Building a Machine Learning solution](/articles/17/primer-on-building-ml-solutions)
 
 WEEK 2 - Principles of Modelling: Model structure, Learning framework
 
-WEEK 3 - Principles of Modelling: Regularization, more on Model structure
+WEEK 3 - Principles of Modelling: Regularization, "Deep" Model structure
 
-WEEK 4 - TBE
+WEEK 4 - Bayesian inference
 
 WEEK 5 - TBE

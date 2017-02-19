@@ -11,14 +11,14 @@ This week introduces **high-level overview of building a Machine Learning (ML) s
 
 Don't be afraid of Math, embrace it. Math is (1) an **efficient, universal and unanimously understood** language. Once we rephrase a problem in mathematical toungue, we may see hidden  connections between numerous of *supposedly* unrelated problems in different fields [[DAslides:pp22-38]](https://1drv.ms/b/s!ApOZHae4ogqZ3AJg76xtDPEzSlH-). Further more, Math is (2) **non-ambiguous** so that we can approach a solution of a problem with transparent and concrete reasoning. Nevertheless, always explain the math we use (or encounter) in our usual natural language if possible, so that we can imprint the **underlying intuition** and not getting lost in the technical details that follow.
 
-> *Author's comment*: Machines are born "dumb". The more *we* - as human being - want more intelligent machines that can support us without much of the human's guidance, the more we need to mentor them by, at least, speaking explicitly in a language that machines can understand. Math is a much more machine-understandable language than our every-day natural languages. Lesson: there is no escaping from math if we want to advance in ML.
+> *Author's comment*: Machines are born "dumb". The more *we* - as human being - want more intelligent machines that can support us without much of the human's guidance, the more we need to mentor them by, at least, speaking explicitly in a language that machines can understand. Math is a much more machine-understandable language than our every-day natural languages. *Lesson*: there is no escaping from math if we want to advance in ML.
 
 ## Case-study
 
-**Identify a flower type based on its attributes** which include petal and sepal size.
+**Identify a flower type based on its attributes** which are petal and sepal size.
 <small>Ref: [http://scikit-learn.org/stable/tutorial/basic/tutorial.html](http://scikit-learn.org/stable/tutorial/basic/tutorial.html)</small>
 
-<img src="{{ site.github.url }}/assets/img/Petal-sepal.jpg" width="510"> 
+<img src="{{ site.github.url }}/assets/img/Petal-sepal.jpg" width="360"> 
  <small>("which flower is this?" - photo from [bing](https://www.bing.com/images/search?view=detailV2&ccid=E8dlW334&id=690CFCA2C5419961A77E0534DC3B6AD1B61FA711&q=sepal&simid=608048017631022285&selectedIndex=5&ajaxhist=0))</small>
 
 **Experience** i.e **Training data**{% marginnote 'mn-trainset' "*training data/training set*" %}: `iris` dataset - a dataset that contain information about certain types of flower 
