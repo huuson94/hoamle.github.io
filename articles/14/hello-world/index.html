@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Hello World</title>
+  <meta name="description" content="">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="http://hoamle.github.io/articles/14/hello-world">
+
+  <link rel="alternate" type="application/rss+xml" title="Hoa M. Le's Personal site" href="http://hoamle.github.io/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+    	<!-- for badge -->
+<!-- 	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+ -->	
+ 		
+ 		
+		
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a href="/index.html">about</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/blog/index.html">blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/project/index.html">projects & publications</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/talk/index.html">talks & tutorials</a>
+		    
+	    
+  	
+	</nav>
+</header>
+
+
+    <article class="group">
+      <p class="subtitle">September 8, 2014</p>
+
+
+<p>Hello world for the $n+1$ times. This post will serve as a repo for troubleshooting blogging problems.</p>
+
+<h3 id="convert-between-different-sources">Convert between different sources</h3>
+<ul>
+  <li>HTML to MarkDown: <code class="highlighter-rouge">pandoc input.html -o output.md --parse-raw</code></li>
+</ul>
+
+<h3 id="markdown-editors">Markdown editors</h3>
+<p><a href="https://github.com/SublimeText-Markdown/MarkdownEditing"><code class="highlighter-rouge">MarkdownEditting</code></a> for Sublime Text</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">knitr</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Warning: package 'knitr' was built under R version 3.3.2
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+<span class="n">rnorm</span><span class="p">(</span><span class="m">5</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## [1] -0.56047565 -0.23017749  1.55870831  0.07050839  0.12928774
+</code></pre>
+</div>
+
+<p>Does <strong>knitr</strong> work with Python? Use the chunk option <code class="highlighter-rouge">engine='python'</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="s">'hello, python world!'</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## hello, python world!
+## ['hello,', 'python', 'world!']
+</code></pre>
+</div>
+
+
+
+    </article>
+    <span class="print-footer">Hello World - September 8, 2014 - Hoa M. Le</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:hoamle@outlook.com"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//linkedin.com/in/hoamle"><span class="icon-googleplus"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/hoamle"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed.xml"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2017 &nbsp;&nbsp;HOA M. LE</span></br> <br>
+<span>This site is created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme for  </a> <a href="//jekyllrb.com">Jekyll</a>.</span>
+</div>  
+</footer>
+  </body>
+</html>

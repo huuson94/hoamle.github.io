@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Simple Language Model</title>
+  <meta name="description" content="">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="http://hoamle.github.io/articles/15/simple-language-model-coursera">
+
+  <link rel="alternate" type="application/rss+xml" title="Hoa M. Le's Personal site" href="http://hoamle.github.io/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+    	<!-- for badge -->
+<!-- 	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+ -->	
+ 		
+ 		
+		
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a href="/index.html">about</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/blog/index.html">blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/project/index.html">projects & publications</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/talk/index.html">talks & tutorials</a>
+		    
+	    
+  	
+	</nav>
+</header>
+
+
+    <article class="group">
+      <h1>Simple Language Model</h1>
+<p class="subtitle">July 21, 2015</p>
+
+<p>This is an implementation of Geoffrey Hinton's Neural Networks Programming Assigment 2 on <a href="https://www.coursera.org/course/neuralnets">Coursera</a> in Python with GPU support by Theano. The assignment was about training a feed-forward neural networks, in order to predict the next word from 3 previous words. Training took ~10s/epoch with default parameters on a GTX 660 GPU. On the other hand, training took ~100s/epoch on a Core 2 Duo E7300 @2.67GHz CPU with the original Octave/MATLAB implementation (10x slower!).</p>
+
+<p>Source code is on <a href="https://github.com/hoamle/Neural-Net-PA2">GitHub</a>. Any suggestions are welcomed.</p>
+
+<h2 id="files-in-the-repo">Files in the repo</h2>
+<ul>
+  <li><code class="highlighter-rouge">data.mat</code>: data file that includes training, validation, and testing set for the model</li>
+  <li><code class="highlighter-rouge">wordModel.ipynb</code>: IPython Notebook that records the main ingredients, notes, and thought when I built the implementation,</li>
+  <li><code class="highlighter-rouge">wordModel.py</code>: the implementation</li>
+</ul>
+
+<h2 id="usage">Usage</h2>
+<ul>
+  <li>Pre-requisites: Python 2.7+, Theano, CUDA 7 (optional, for training by GPU)</li>
+  <li>Run <code class="highlighter-rouge">THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 python wordModel.py</code> in the terminal. Let <code class="highlighter-rouge">device=cpu</code> if you want to train by CPU.</li>
+</ul>
+
+<h2 id="issues">Issues</h2>
+<ul>
+  <li><code class="highlighter-rouge">test_model</code> and <code class="highlighter-rouge">validate_model</code> compute <code class="highlighter-rouge">cost</code> (average cross-entropy) on batches of test set and validation set, not the whole sets respectively. Difference should not be significant though.</li>
+  <li>Original momentum expression did not yield expeceted cross-entropy for some reason. I had to use an alternative from <a href="http://ufldl.stanford.edu/tutorial/supervised/OptimizationStochasticGradientDescent/">Stanford Deep Learning Tutorial</a> (see Momentum section).</li>
+</ul>
+
+<h2 id="references">References</h2>
+<ul>
+  <li><a href="http://deeplearning.net">deeplearning.net</a> tutorials and <a href="http://nbviewer.ipython.org/github/craffel/theano-tutorial/blob/master/Theano%20Tutorial.ipynb#example-mlp">this</a> for building Python code.</li>
+  <li><a href="http://ufldl.stanford.edu/tutorial/supervised/OptimizationStochasticGradientDescent/">Stanford Deep Learning Tuttorial</a></li>
+</ul>
+
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//hoamle.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">Simple Language Model - July 21, 2015 - Hoa M. Le</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:hoamle@outlook.com"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//linkedin.com/in/hoamle"><span class="icon-googleplus"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/hoamle"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed.xml"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2017 &nbsp;&nbsp;HOA M. LE</span></br> <br>
+<span>This site is created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme for  </a> <a href="//jekyllrb.com">Jekyll</a>.</span>
+</div>  
+</footer>
+  </body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Primer on Building a Machine Learning Solution</title>
+  <meta name="description" content="">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="http://hoamle.github.io/articles/17/primer-on-building-ml-solutions">
+
+  <link rel="alternate" type="application/rss+xml" title="Hoa M. Le's Personal site" href="http://hoamle.github.io/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+    	<!-- for badge -->
+<!-- 	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+ -->	
+ 		
+ 		
+		
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a href="/index.html">about</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/blog/index.html">blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/project/index.html">projects & publications</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/talk/index.html">talks & tutorials</a>
+		    
+	    
+  	
+	</nav>
+</header>
+
+
+    <article class="group">
+      <h1>Primer on Building a Machine Learning Solution</h1>
+<p class="subtitle">February 18, 2017</p>
+
+<p>This week introduces <strong>high-level overview of building a Machine Learning (ML) solution</strong> for a problem, summarized by the following diagram and demo’ed with <a href="http://scikit-learn.org/stable/index.html"><code class="highlighter-rouge">scikit-learn</code></a>.</p>
+<figure><figcaption></figcaption><img src="/assets/img/week1-2.png" /></figure>
+
+<p><strong>N.B.</strong><label for="mn-id-glossary" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-id-glossary" class="margin-toggle" /><span class="marginnote">Visit <a href="https://hoamle.github.io/articles/17/machine-learning-appendix/#glossary">MLglossary</a> for a summary of the math notations. The MLglossary also lists common terms in ML with their synonyms or strongly related concepts. Because ML is an interdisplinary field, there are many different terminologies, which come from the relevant fields of research, that are actually <em>equivalent</em>. </span> We will gradually <em>rephrase</em> every-day language with equivalent ML terminologies and their <em>math notations</em>.</p>
+
+<p>Don’t be afraid of Math, embrace it. Math is (1) an <strong>efficient, universal and unanimously understood</strong> language. Once we rephrase a problem in mathematical toungue, we may see hidden  connections between numerous of <em>supposedly</em> unrelated problems in different fields <a href="https://1drv.ms/b/s!ApOZHae4ogqZ3AJg76xtDPEzSlH-">[DAslides:pp22-38]</a>. Further more, Math is (2) <strong>non-ambiguous</strong> so that we can approach a solution of a problem with transparent and concrete reasoning. Nevertheless, always explain the math we use (or encounter) in our usual natural language if possible, so that we can imprint the <strong>underlying intuition</strong> and not getting lost in the technical details that follow.</p>
+
+<blockquote>
+  <p><em>Author’s comment</em>: Machines are born “dumb”. The more <em>we</em> - as human being - want more intelligent machines that can support us without much of the human’s guidance, the more we need to mentor them by, at least, speaking explicitly in a language that machines can understand. Math is a much more machine-understandable language than our every-day natural languages. <em>Lesson</em>: there is no escaping from math if we want to advance in ML.</p>
+</blockquote>
+
+<h2 id="case-study">Case-study</h2>
+
+<p><strong>Identify a flower type based on its attributes</strong> which are petal and sepal size.<br />
+<small>Ref: <a href="http://scikit-learn.org/stable/tutorial/basic/tutorial.html">http://scikit-learn.org/stable/tutorial/basic/tutorial.html</a></small></p>
+
+<p><img src="/assets/img/Petal-sepal.jpg" width="360" /> <br />
+ <small>(“which flower is this?” - photo from <a href="https://www.bing.com/images/search?view=detailV2&amp;ccid=E8dlW334&amp;id=690CFCA2C5419961A77E0534DC3B6AD1B61FA711&amp;q=sepal&amp;simid=608048017631022285&amp;selectedIndex=5&amp;ajaxhist=0">bing</a>)</small></p>
+
+<p><strong>Experience</strong> i.e <strong>Training data</strong><label for="mn-trainset" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-trainset" class="margin-toggle" /><span class="marginnote"><em>training data/training set</em> </span>: <code class="highlighter-rouge">iris</code> dataset - a dataset that contain information about certain types of flower</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span> 
+<span class="n">iris_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>First, study our data, so that we can <strong>pre-process</strong><label for="mn-preprocess" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-preprocess" class="margin-toggle" /><span class="marginnote"><em>data preprocessing</em> </span> the data provided. In this step, we might need to manipulate the raw data to extract important information, or normalize following certain standard. The purpose is (but not limited to) to prepare the data in proper formats for later implementation.</p>
+
+<p>For demonstration purpose, we are using a “<em>clean”</em> dataset (already stored in structured format, no missing or suspicious values), so we only need to do minimal data pre-processing. Reminded that it is most likely <em>not</em> the case in practice <a href="https://1drv.ms/b/s!ApOZHae4ogqZ3AJg76xtDPEzSlH-">[DAslides:p11]</a>.</p>
+
+<h3 id="study-the-data">Study the data</h3>
+
+<p>Read the “docs” i.e. data description</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># print(iris_dataset)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">iris_dataset</span><span class="p">[</span><span class="s">'DESCR'</span><span class="p">][:</span><span class="mi">1000</span><span class="p">])</span>  <span class="c"># the "doc" is quite long, so I </span>
+                                  <span class="c"># only extract the first 1000 </span>
+                                  <span class="c"># characters for demonstration purpose    </span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Iris Plants Database
+
+Notes
+-----
+Data Set Characteristics:
+    :Number of Instances: 150 (50 in each of three classes)
+    :Number of Attributes: 4 numeric, predictive attributes and the class
+    :Attribute Information:
+        - sepal length in cm
+        - sepal width in cm
+        - petal length in cm
+        - petal width in cm
+        - class:
+                - Iris-Setosa
+                - Iris-Versicolour
+                - Iris-Virginica
+    :Summary Statistics:
+
+    ============== ==== ==== ======= ===== ====================
+                    Min  Max   Mean    SD   Class Correlation
+    ============== ==== ==== ======= ===== ====================
+    sepal length:   4.3  7.9   5.84   0.83    0.7826
+    sepal width:    2.0  4.4   3.05   0.43   -0.4194
+    petal length:   1.0  6.9   3.76   1.76    0.9490  (high!)
+    petal width:    0.1  2.5   1.20  0.76     0.9565  (high!)
+    ============== ==== ==== ======= ===== ====================
+
+    :Missing Attribute Values: None
+</code></pre>
+</div>
+
+<p>Observe:</p>
+
+<p><code class="highlighter-rouge">&gt;</code> There are 150 examples i.e. <em>data points</em></p>
+
+<p><code class="highlighter-rouge">&gt;</code> Each flower is described by <script type="math/tex">P=4</script> attributes i.e. <strong>features</strong><label for="mn-feature" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-feature" class="margin-toggle" /><span class="marginnote"><em>features</em> </span> or <em>predictors</em>: <code class="highlighter-rouge">sepal length</code> (<script type="math/tex">x_{1}</script>), <code class="highlighter-rouge">sepal width</code> (<script type="math/tex">x_{2}</script>), <code class="highlighter-rouge">petal length</code> (<script type="math/tex">x_{3}</script>), <code class="highlighter-rouge">petal width</code> (<script type="math/tex">x_{4}</script>).</p>
+
+<p><code class="highlighter-rouge">&gt;</code> All 4 features’ measures are conceptually similar (numeric, real values that lie in the same domain), so no <strong>data normalization</strong><label for="mn-norm" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-norm" class="margin-toggle" /><span class="marginnote"><em>data normalization</em> </span> required.</p>
+
+<p><code class="highlighter-rouge">&gt;</code> There are <script type="math/tex">K=3</script> types i.e. <strong>classes</strong><label for="mn-class" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-class" class="margin-toggle" /><span class="marginnote"><em>class, label</em> </span> of flower, which are <code class="highlighter-rouge">setosa</code>, <code class="highlighter-rouge">versicolor</code>, and  <code class="highlighter-rouge">virginica</code> - represented by ID <code class="highlighter-rouge">0</code>, <code class="highlighter-rouge">1</code>, <code class="highlighter-rouge">2</code> respectively. Note: each flower is <strong>labelled</strong> by a <em>single</em> ID, indicating that a flower can only be member of 1 type.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">iris_dataset</span><span class="p">[</span><span class="s">'data'</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c"># each row in `iris_dataset['data']` is </span>
+                                   <span class="c"># a feature vector of the respective flower</span>
+<span class="k">print</span><span class="p">(</span><span class="n">iris_dataset</span><span class="p">[</span><span class="s">'target_names'</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">iris_dataset</span><span class="p">[</span><span class="s">'target'</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(150L, 4L)
+['setosa' 'versicolor' 'virginica']
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
+ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+ 2 2]
+</code></pre>
+</div>
+
+<p>We write the features as a feature vector <script type="math/tex">x=\left(x_{1},x_{2},x_{3},x_{4}\right)^{T}</script>. Vector <script type="math/tex">x</script> is a <strong>representation</strong><label for="mn-representation" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-representation" class="margin-toggle" /><span class="marginnote"><em>data representation</em> </span> of a flower i.e. a summary of this flower attributes. We extract and store all feature vectors to a 2D-array<label for="sn-id-2d" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id-2d" class="margin-toggle" /><span class="sidenote"><code class="highlighter-rouge">2D-array</code> can be understood as a table-like data structure </span> <script type="math/tex">X</script>, where the <script type="math/tex">n</script>-th row corresponds to feature vector <script type="math/tex">x^{\left(n\right)}</script>.</p>
+
+<p><em><font color="red">Note</font></em>: In this course, we use capital letters, e.g. <script type="math/tex">X</script> to represent a set of data points rather than a matrix as usual. If we imply the latter, it should be clear from the context.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">D</span><span class="p">[</span><span class="s">'X'</span><span class="p">]</span> <span class="o">=</span> <span class="n">iris_dataset</span><span class="p">[</span><span class="s">'data'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="s">'X'</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(150L, 4L)
+</code></pre>
+</div>
+
+<p>We extract and store all the labels to an 1D-array<label for="sn-id-labels" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id-labels" class="margin-toggle" /><span class="sidenote">In actual implementation (which we won’t see in this week example), <script type="math/tex">Y</script> is almost always converted to an equivalent 2D-array implicitly, where each column is a binary indicator (e.g. {1, 0}) of a respective class in all examples. </span> <script type="math/tex">Y</script>, where the <script type="math/tex">n</script>-th element indicates flower type <script type="math/tex">y^{\left(n\right)}</script>. <em><font color="red">Note</font></em>: the order of all <script type="math/tex">n</script>’s in <script type="math/tex">Y</script> must match with the counterparts in <script type="math/tex">X</script>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">D</span><span class="p">[</span><span class="s">'Y'</span><span class="p">]</span> <span class="o">=</span> <span class="n">iris_dataset</span><span class="p">[</span><span class="s">'target'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="s">'Y'</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(150L,)
+</code></pre>
+</div>
+
+<p>Now we can define our problem more precisely by the language of math</p>
+
+<h3 id="define-the-problem">Define the problem</h3>
+
+<p>Given any attribute <script type="math/tex">x</script>, we would like to <strong>predict</strong> a corresponding prediction <script type="math/tex">\hat{y}\in</script>  {<code class="highlighter-rouge">setosa</code>, <code class="highlighter-rouge">versicolor</code>, <code class="highlighter-rouge">virginica</code>} by a ML <code class="highlighter-rouge">Model</code> In order to know if our model has good predictive performance, we need an <code class="highlighter-rouge">Assessment</code> to measure the performance.  In this problem, we can measure the performance by an <strong>evaluation metric</strong><label for="mn-metric" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-metric" class="margin-toggle" /><span class="marginnote"><em>evaluation metrics</em> </span> called <a href="http://scikit-learn.org/stable/modules/model_evaluation.html#accuracy-score"><em>Accuracy</em></a>, which</p>
+
+<div class="mathblock"><script type="math/tex; mode=display">\text{Accuracy}=\dfrac{1}{N}\sum_{n}\mathbb{1}\left(\hat{y}^{\left(n\right)}=y^{\left(n\right)}\right)</script></div>
+
+<p>The value of this metric increases every time we correctly identify a flower type. A prediction is correct if predicted type <script type="math/tex">\hat{y}</script> of a flower is the same as its actual type <script type="math/tex">y</script>.</p>
+
+<figure><figcaption></figcaption><img src="/assets/img/week1-1.png" /></figure>
+<p><em><font color="red">Note</font></em><label for="mn-id-metrics" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-id-metrics" class="margin-toggle" /><span class="marginnote">Many problems require 2 or more metrics for an objective assessment. </span>: while Accuracy is appropriate for this particular problem, other problems may require some other evaluation metric. For example, in case wewant to identify whether a patient has cancer or not, we may want to minimize the risk of missing true cases (patients who actually have cancer - True Positive cases) as much as possible. In this case, <a href="http://scikit-learn.org/stable/modules/model_evaluation.html#precision-recall-f-measure-metrics"><em>Recall</em></a> is a better measure of performance than Accuracy.</p>
+
+<p>In order to build a model that perform well, we need to <strong>train</strong><label for="sn-id-knn" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id-knn" class="margin-toggle" /><span class="sidenote">Note: <em>k-nearest neighbours</em> - a common ML algorithm - is an exception such that the algorithm virtually does not perform any kind of learning. While the algorithm has its own mertis, it does not scale to address high-dimensional inputs or non-trivial semantic recognition problems. Read more: <a href="http://cs231n.github.io/classification/#nn">[cs231n]</a> </span> it by utilizing the <em>experience</em> that the model has. In other word, the model needs to improve its performance by <em>learning</em> from the <em>training data</em> <script type="math/tex">\mathcal{D}_{\text{train}}=\left\{ x^{\left(n\right)},y^{\left(n\right)}\right\}</script> from an initial “naive” state. This task is called, unsurprisingly, <strong>learning</strong><label for="mn-id-learning" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-id-learning" class="margin-toggle" /><span class="marginnote"><em>learning</em> </span>, and is also commonly called <strong>fitting</strong>.</p>
+<figure><figcaption></figcaption><img src="/assets/img/week1-2.png" /></figure>
+
+<p>A ML algorithm is not only required to perform well on the training data, but also on the <em>new, unseen data</em> that it has never encountered (i.e. not in the training set). Those unseen data that could be used to assess a model performance are called <strong>test data</strong><label for="mn-id-testset" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-id-testset" class="margin-toggle" /><span class="marginnote"><em>test data/test set</em> </span>. High performance on test data is important, because it is an indicator for the model’s ability to  <strong>generalize</strong> to arbitrary data examples.</p>
+
+<p>For demonstration purpose, we will use a small subset of <code class="highlighter-rouge">iris</code> dataset as test data. The remaining will serve as training data.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># Randomly pick 20% of the examples as test data, and train</span>
+<span class="c"># on the remaining 80%.</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="c"># note: sklearn 0.18 moved `train_test_split` to </span>
+<span class="c"># `sklearn.model_selection` module </span>
+
+<span class="n">indicies</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">iris_dataset</span><span class="p">[</span><span class="s">'data'</span><span class="p">]))]</span>
+<span class="n">train_idx</span><span class="p">,</span> <span class="n">test_idx</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">indicies</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+                                     <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  
+<span class="c"># Each time we run `train_test_split`, a new split is produced </span>
+<span class="c"># randomly and is different from the previous run. Therefore, </span>
+<span class="c"># it is essential to assign a `random_state` to make our work </span>
+<span class="c"># reproducible on other machines or for later use. </span>
+
+<span class="c"># Use capital letter e.g. `X` to indicate set of data points.</span>
+<span class="n">D_train</span> <span class="o">=</span> <span class="p">{</span><span class="s">'X'</span><span class="p">:</span> <span class="n">D</span><span class="p">[</span><span class="s">'X'</span><span class="p">][</span><span class="n">train_idx</span><span class="p">],</span>
+           <span class="s">'Y'</span><span class="p">:</span> <span class="n">D</span><span class="p">[</span><span class="s">'Y'</span><span class="p">][</span><span class="n">train_idx</span><span class="p">]</span>
+           <span class="p">}</span>
+<span class="n">D_test</span> <span class="o">=</span> <span class="p">{</span><span class="s">'X'</span><span class="p">:</span> <span class="n">D</span><span class="p">[</span><span class="s">'X'</span><span class="p">][</span><span class="n">test_idx</span><span class="p">],</span>
+         <span class="s">'Y'</span><span class="p">:</span> <span class="n">D</span><span class="p">[</span><span class="s">'Y'</span><span class="p">][</span><span class="n">test_idx</span><span class="p">]</span>
+        <span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Test set size: {} examples"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_idx</span><span class="p">)))</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Test set size: 30 examples
+</code></pre>
+</div>
+
+<p>In this week example demo, we use and train a model called <strong>Softmax Regression</strong>. For now, we can simply understand Softmax Regression as a “black-box” ML algorithm that can do our prediction problem. <em>“What are assumptions on model structure? How was learning task done? Can we do better than standard Softmax Regression?, etc”</em> are the topics for next weeks.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="c"># Softmax regression is a multi-class generalization of </span>
+<span class="c"># Logistic Regression model</span>
+
+<span class="c"># initialize a "naive" model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">multi_class</span><span class="o">=</span><span class="s">"multinomial"</span><span class="p">,</span>
+                          <span class="n">solver</span><span class="o">=</span><span class="s">"lbfgs"</span><span class="p">)</span>  
+</code></pre>
+</div>
+
+<h3 id="learning">Learning</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">D_train</span><span class="p">[</span><span class="s">'X'</span><span class="p">],</span> <span class="n">D_train</span><span class="p">[</span><span class="s">'Y'</span><span class="p">]);</span>  <span class="c"># after `.fit`, the model has finished its learning</span>
+</code></pre>
+</div>
+
+<p>Learning finished!</p>
+
+<h3 id="prediction">Prediction</h3>
+<p>Now try indentifying a new, unseen flower with feature <script type="math/tex">x^{\left(\text{test}\right)}</script></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">x_test</span> <span class="o">=</span> <span class="n">D_test</span><span class="p">[</span><span class="s">'X'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[ 5.8  4.   1.2  0.2]
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>  
+<span class="k">print</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[0]
+</code></pre>
+</div>
+
+<h3 id="assessment">Assessment</h3>
+
+<p>Our model <code class="highlighter-rouge">predict</code>s that the flower whose petal and sepal size are as described by <script type="math/tex">x^{\left(\text{test}\right)}</script> is a “setosa” (<code class="highlighter-rouge">id: 0</code>). <strong>Is this true?</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">==</span> <span class="n">D_test</span><span class="p">[</span><span class="s">'Y'</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[ True]
+</code></pre>
+</div>
+
+<p>Good news! But what about prediction for other flowers?</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">Y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">D_test</span><span class="p">[</span><span class="s">'X'</span><span class="p">])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Flower</span><span class="se">\t</span><span class="s">Predict</span><span class="se">\t</span><span class="s">Actual</span><span class="se">\t</span><span class="s">Correct prediction?"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_idx</span><span class="p">)):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"{}</span><span class="se">\t</span><span class="s">{}</span><span class="se">\t</span><span class="s">{}</span><span class="se">\t</span><span class="s">{}</span><span class="se">\t</span><span class="s">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">test_idx</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> 
+            <span class="n">Y_pred</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">D_test</span><span class="p">[</span><span class="s">'Y'</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">Y_pred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">D_test</span><span class="p">[</span><span class="s">'Y'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">))</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Flower  Predict Actual  Correct prediction?
+14      0       0       True    
+98      1       1       True    
+75      1       1       True    
+16      0       0       True    
+131     2       2       True    
+56      1       1       True    
+141     2       2       True    
+44      0       0       True    
+29      0       0       True    
+120     2       2       True    
+94      1       1       True    
+5       0       0       True    
+102     2       2       True    
+51      1       1       True    
+78      1       1       True    
+42      0       0       True    
+92      1       1       True    
+66      1       1       True    
+31      0       0       True    
+35      0       0       True    
+90      1       1       True    
+84      1       1       True    
+77      2       1       False   
+40      0       0       True    
+125     2       2       True    
+99      1       1       True    
+33      0       0       True    
+19      0       0       True    
+73      1       1       True    
+146     2       2       True    
+</code></pre>
+</div>
+
+<p>Our model correctly indentifies 29 examples and makes 1 error out of 30 testing examples, achieving an Accuracy of <script type="math/tex">\dfrac{1}{N}_{\text{test}}\sum_{n}\mathbb{1}\left(\hat{y}^{\left(n\right)}=y^{\left(n\right)}\right)=29/30=96.7\%</script></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nb">sum</span><span class="p">(</span><span class="n">Y_pred</span> <span class="o">==</span> <span class="n">D_test</span><span class="p">[</span><span class="s">'Y'</span><span class="p">])</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_idx</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0.96666666666666667
+</code></pre>
+</div>
+
+<p><em>(comment: The performance is pretty impressive, but let hold off from a pre-matured assessment! See <a href="#conclusion">Conclusion</a>)</em></p>
+
+<h2 id="a-hrefconclusionconclusiona"><a href="#conclusion">Conclusion</a></h2>
+
+<p>To summarize, we have completed the most basic steps to build a ML solution for our problem as specified by this diagram</p>
+<figure><figcaption></figcaption><img src="/assets/img/week1-2.png" /></figure>
+
+<p>Specifically, we studied a (single-label) <code class="highlighter-rouge">multi-class classification</code><label for="sn-id-slmc" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id-slmc" class="margin-toggle" /><span class="sidenote">When ones refer to a <code class="highlighter-rouge">multi-class classification</code> problem, we implicit understand that it is a single-label problem. The more generalized classification problem is called <code class="highlighter-rouge">multi-label multi-class classification</code>, which we will not cover in this series. </span> problem which require us to build a ML model that can predict a flower type based on its sepal and petal measurements. As a solution for this problem, we used and trained a Softmax Regression <code class="highlighter-rouge">Model</code>, did <code class="highlighter-rouge">Assessment</code> on <em>one</em> split of test set, measured the performance with Accuracy metric, and achieved impressive predictive Accuracy of <script type="math/tex">96.7\%</script>.</p>
+
+<p>However, there still exist <strong>fundamental</strong> questions that we need to address:</p>
+
+<ol>
+  <li>Is <script type="math/tex">96.7\%</script> a <em>reliable</em> estimate for our model accuracy on <strong>other test sets</strong>?<label for="sn-id-assess" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id-assess" class="margin-toggle" /><span class="sidenote">TODO link to Part 4 </span></li>
+  <li>How is Softmax Regression model <strong>constructed</strong>?<label for="sn-id-buildmodel" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id-buildmodel" class="margin-toggle" /><span class="sidenote">TODO link to Part 2 </span></li>
+  <li>In a problem for which <strong>assumptions</strong> imposed by Softmax Regression model do <strong>not suffice</strong>, how can we do better?<label for="sn-id-nonlinear" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id-nonlinear" class="margin-toggle" /><span class="sidenote">TODO link to Part 3 </span></li>
+  <li>How can <em>we</em> - as the human - <strong>interpret</strong> the contribution of the features to the prediction, or extract human-perceivable semantics that the features may hold? <label for="sn-id-nonlinear" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id-nonlinear" class="margin-toggle" /><span class="sidenote">TODO link to Part 5 </span></li>
+  <li>(other issues that would arise when approaching above questions)</li>
+</ol>
+
+<p>These questions define the topics for next parts of this series. In each part, we will be approaching different <em>multi-class classification</em> problems as case-studies for the relevant topics. The same reasoning and principles also straightforwardly apply to <em>binary classification</em>, <em>regression</em>, and <em>clustering</em> problems, which is left as homework for the readers.</p>
+
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//hoamle.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">Primer on Building a Machine Learning Solution - February 18, 2017 - Hoa M. Le</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:hoamle@outlook.com"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//linkedin.com/in/hoamle"><span class="icon-googleplus"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/hoamle"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed.xml"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2017 &nbsp;&nbsp;HOA M. LE</span></br> <br>
+<span>This site is created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme for  </a> <a href="//jekyllrb.com">Jekyll</a>.</span>
+</div>  
+</footer>
+  </body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Computers can Draw (TBE)</title>
+  <meta name="description" content="">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="http://hoamle.github.io/articles/17/computers-can-draw">
+
+  <link rel="alternate" type="application/rss+xml" title="Hoa M. Le's Personal site" href="http://hoamle.github.io/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+    	<!-- for badge -->
+<!-- 	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+ -->	
+ 		
+ 		
+		
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a href="/index.html">about</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/blog/index.html">blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/project/index.html">projects & publications</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/talk/index.html">talks & tutorials</a>
+		    
+	    
+  	
+	</nav>
+</header>
+
+
+    <article class="group">
+      <h1>Computers can Draw (TBE)</h1>
+<p class="subtitle">January 1, 2017</p>
+
+<p>Survey on the attempts to build an AI artist<br />
+(Note-to-self: divided into 2 posts)</p>
+
+<h2 id="overview">Overview</h2>
+<ul>
+  <li>AARON (Harold Cohen)</li>
+  <li>“The Painting Fool” (Simon Colton)</li>
+  <li>“The Next Rembrandt” (TU Delft)</li>
+  <li>Probabilistic models</li>
+</ul>
+
+<h2 id="modern-advances">Modern advances</h2>
+
+<h3 id="non-photo-realistic-rendering-npr">Non Photo-realistic Rendering (NPR)</h3>
+<ul>
+  <li>physic-based: NPR book</li>
+  <li>data-driven: texture/style transfer, e.g. Artomatix (Erric Risser et al), Neural Art (Gatys et al)</li>
+</ul>
+
+<h3 id="generative-probabilistic-model-of-images-separated-post">Generative probabilistic model of images (separated post)</h3>
+<ul>
+  <li>Restricted Boltzman Machine (RBM)</li>
+  <li>Variational Auto Encoder (VAE), Deep Recurrent Attentive Writer (DRAW)</li>
+  <li>Generative Adversarial Network (GAN)</li>
+  <li>PixelRNN</li>
+  <li><strong>PPGN</strong>: Generative net + conditioned + activation maximisation + prior structure = photo-realistic image generation!!<br />
+(inner-thought: 18-month ago this vague idea of “creative AI” drove me to machine/deep learning, and here we are!!)</li>
+</ul>
+
+<h2 id="applications-in-graphics">Applications in graphics</h2>
+<ul>
+  <li>iGAN (Jun-Yan Zhu et al)</li>
+  <li>StyLit (Jakub Fišer et al)</li>
+  <li>Colorisation (various) (note-to-self: r/colorization might be a good place to crawl labelled data)</li>
+  <li>Texture propagation (Satoshi Iizuaka et al)</li>
+  <li>Sketch cleaning (Satoshi Iizuaka et al)</li>
+  <li>Super-resolution</li>
+  <li>…</li>
+</ul>
+
+<p>(Inner-thought: arghh I’m so eager to finish the current duties, so that I can draft a comprehensive post of this survey)</p>
+
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//hoamle.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">Computers can Draw (TBE) - January 1, 2017 - Hoa M. Le</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:hoamle@outlook.com"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//linkedin.com/in/hoamle"><span class="icon-googleplus"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/hoamle"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed.xml"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2017 &nbsp;&nbsp;HOA M. LE</span></br> <br>
+<span>This site is created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme for  </a> <a href="//jekyllrb.com">Jekyll</a>.</span>
+</div>  
+</footer>
+  </body>
+</html>

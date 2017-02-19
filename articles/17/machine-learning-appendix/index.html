@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Machine learning appendix</title>
+  <meta name="description" content="">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="http://hoamle.github.io/articles/17/machine-learning-appendix">
+
+  <link rel="alternate" type="application/rss+xml" title="Hoa M. Le's Personal site" href="http://hoamle.github.io/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+    	<!-- for badge -->
+<!-- 	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+ -->	
+ 		
+ 		
+		
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a href="/index.html">about</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/blog/index.html">blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/project/index.html">projects & publications</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/talk/index.html">talks & tutorials</a>
+		    
+	    
+  	
+	</nav>
+</header>
+
+
+    <article class="group">
+      <h1>Machine learning appendix</h1>
+<p class="subtitle">February 1, 2017</p>
+
+<p>For personal use, but suggestions are highly appreciated.<br />
+<em>(to be updated sporadically)</em><br />
+<!--more--></p>
+
+<h2 id="a-hrefglossaryglossary-of-common-terms-and-notationsa"><a href="#glossary">Glossary of common terms and notations</a></h2>
+<p>Each row lists the terms that are <em>synonyms</em> (or <em><font color="red">strongly related</font></em>)</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">&gt;</code> For brevity, we write <script type="math/tex">\text{Pr}\left(x\right)</script>, instead of <script type="math/tex">\text{Pr}\left(X=x\right)</script> as normally seen in statistical texts. Nevertheless, we should not do so when working on e.g. theoretical foundation of model robustness to avoid confusion.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Term</th>
+      <th style="text-align: left">Common notations and more information (if any)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">estimation/prediction/inference of a quantity</td>
+      <td style="text-align: left">the quantity with a “hat” eg. <script type="math/tex">\hat{y}</script>, <script type="math/tex">\hat{\theta}</script>, <script type="math/tex">\text{Pr}\left(y\left|x,\hat{\theta}\right.\right)</script></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>ước lượng/dự đoán/suy diễn một đại lượng nào đấy</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">objective function, error function, loss function, cost function</td>
+      <td style="text-align: left"><script type="math/tex">J\left(\cdot\right)</script> ; or <script type="math/tex">L\left(\cdot\right)</script> ; or <script type="math/tex">l\left(\cdot\right)</script></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>hàm mục tiêu, hàm lỗi, hàm tổn thất, hàm chi phí</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">learning, training; <font color="red">related</font>:  parameter estimation</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>học mô hình, huấn luyện mô hình, ước lượng tham số</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">evaluating, forward pass - <em>as in</em> “computing some quantity given estimates of all unknown quantities”</td>
+      <td style="text-align: left"><font color="red">note</font>: not to be confused with <code class="highlighter-rouge">performance evaluation</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>tính toán, chiều xuôi</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">score function; <font color="red">related</font>: (inverse) link function</td>
+      <td style="text-align: left"><script type="math/tex">s\left(\cdot\right)</script> ; or <script type="math/tex">g\left(\cdot\right)</script> if link function</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>hàm tính điểm, hàm liên kết</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">neuron/unit; <font color="red">related</font>: dimension (of a vector)</td>
+      <td style="text-align: left"><script type="math/tex">x_{d}</script> where <script type="math/tex">d</script> is a dimesion of vector <script type="math/tex">x</script></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>nơ-ron, chiều (của một vec-tơ)</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">feature; <font color="red">related</font>: independent variable, explanatory variable, predictor</td>
+      <td style="text-align: left"><script type="math/tex">x_{d}</script> where <script type="math/tex">d</script> is a dimesion of vector <script type="math/tex">x</script>. <font color="red">note</font>: in practice, most of the time we imply <code class="highlighter-rouge">feature</code> as <code class="highlighter-rouge">feature vector</code>, thus use vector <script type="math/tex">x</script> instead</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>vec-tơ đặc trưng, biến độc lập, biến giải thích, nhân tố giải thích</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mid-/high-level feature, hidden/latent variable; <font color="red">related</font>: hidden neuron<strong>s</strong>/unit<strong>s</strong></td>
+      <td style="text-align: left"><script type="math/tex">z</script> ; or <script type="math/tex">h</script> ; or <script type="math/tex">\theta</script> if assumed a random variable</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>đặc trưng bậc trung hoặc bậc cao, biến ẩn, các nơ-ron ẩn</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">target, label; <font color="red">related</font>: dependent variable, response variable</td>
+      <td style="text-align: left"><script type="math/tex">y</script> ; or <script type="math/tex">t</script></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>mục tiêu, nhãn, biến phụ thuộc, biến (?)</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">observed data/variable(s),</td>
+      <td style="text-align: left"><script type="math/tex">\mathcal{D}</script> ; or <script type="math/tex">x</script> ; or <script type="math/tex">x</script> and <script type="math/tex">y</script> if supervised learning</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>dữ liệu/biến quan sát được (đã biết)</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">unobserved data/variable(s)</td>
+      <td style="text-align: left"><script type="math/tex">\tilde{\mathcal{D}}</script> ; or <script type="math/tex">\tilde{\mathcal{x}}</script> ; or <script type="math/tex">x'</script> ; or <script type="math/tex">x^{\left(\text{new}\right)}</script></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>dữ liệu/biến không quan sát được (chưa biết)</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">data point</td>
+      <td style="text-align: left"><script type="math/tex">x</script> ; or (if working with more than 1 data point) <script type="math/tex">x^{\left(n\right)}</script>, or <script type="math/tex">x_{n}</script> if <script type="math/tex">x</script> represents a set of data points</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>điểm dữ liệu</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">parameter; <font color="red">related</font>: weight, bias (as the “offset” from the origin)</td>
+      <td style="text-align: left"><script type="math/tex">\theta</script> , <script type="math/tex">W</script>, <script type="math/tex">b</script> respectively</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>tham số, trọng số, độ lệch</em></td>
+      <td style="text-align: left"><font color="red">note</font>: <code class="highlighter-rouge">bias</code> is an <a href="https://en.wikipedia.org/wiki/Umbrella_term">umbrella term</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"><code class="highlighter-rouge">bias</code> has more <a href="https://en.wikipedia.org/wiki/Bias_(statistics)">common meanings</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">parameterized function</td>
+      <td style="text-align: left"><script type="math/tex">f\left(x,y\,\mathbf{;}\,\theta\right)</script></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>hàm có tham số</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">parametric distribution</td>
+      <td style="text-align: left"><script type="math/tex">p_{\theta}\left(x\right)</script></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><em>phân bố xác suất có tham số</em></td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="back-propogation-algorithm">Back-propogation algorithm</h2>
+<p><label for="backprop-demo" class="margin-toggle"> ⊕</label><input type="checkbox" id="backprop-demo" class="margin-toggle" /><span class="marginnote"><em>Conditions</em>: (i) J is differentiable every where w.r.t. theta; (ii) J and all thetas form a directed acyclic computational graph. </span> <strong>For what</strong>: computes gradient <span>​<script type="math/tex"> 
+\nabla_{\theta}J=\dfrac{\partial J}{\partial\theta} </script></span> for <strong>all</strong> <span>​<script type="math/tex"> \theta 
+</script></span>’s of interest. <br />
+[<a href="#">Demo</a>] TODO</p>
+
+<p><em>Use case(s)</em>: update optimal parameter <span>​<script type="math/tex"> \hat{\theta} </script></span>’s of a neural network (or a certain class of probabilistic models) by gradient descent algorithms;</p>
+
+<h2 id="manifold-learning">Manifold learning</h2>
+<blockquote>
+  <p><strong>Manifold Learning</strong> (often also referred to as <a href="http://en.wikipedia.org/wiki/Nonlinear_dimensionality_reduction"><strong>non-linear dimensionality reduction</strong></a>) pursuits the goal to <strong><em>embed data that originally lies in a high dimensional space in a lower dimensional space</em></strong>, while preserving characteristic properties. This is possible because <em>for any high dimensional data to be interesting, it must be intrinsically low dimensional</em>. For example, images of faces might be represented as points in a high dimensional space (let’s say your camera has 5MP – so your images, considering each pixel consists of three values [r,g,b], lie in a 15M dimensional space), but not every 5MP image is a face. Faces lie on a sub-manifold in this high dimensional space. A <strong>sub-manifold</strong> is <strong><em>locally Euclidean</em></strong>, i.e. if you take two <em>very similar points</em>, for example two images of identical twins, you can <em>interpolate</em> between them and still <em>obtain an image on the manifold</em>, but <strong><em>globally not Euclidean</em></strong> – if you take two images that are very different — for example <a href="http://www.anorak.co.uk/wp-content/uploads/2011/07/31.jpeg">Arnold Schwarzenegger</a> and <a href="http://vivirlatino.com/i/2008/11/hillary-clinton.jpg">Hillary Clinton</a> – you <em>cannot interpolate</em> between them<label for="sn-manifold-global" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-manifold-global" class="margin-toggle" /><span class="sidenote">The example assumely talked about a “limited” face image manifold right? </span>.<br />
+<cite><a href="http://www.cs.cornell.edu/~kilian/research/manifold/manifold.html">(ref)</a></cite></p>
+</blockquote>
+
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//hoamle.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">Machine learning appendix - February 1, 2017 - Hoa M. Le</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:hoamle@outlook.com"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//linkedin.com/in/hoamle"><span class="icon-googleplus"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/hoamle"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed.xml"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2017 &nbsp;&nbsp;HOA M. LE</span></br> <br>
+<span>This site is created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme for  </a> <a href="//jekyllrb.com">Jekyll</a>.</span>
+</div>  
+</footer>
+  </body>
+</html>

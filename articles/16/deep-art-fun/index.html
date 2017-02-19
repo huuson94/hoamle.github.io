@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Deep Art fun</title>
+  <meta name="description" content="">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="http://hoamle.github.io/articles/16/deep-art-fun">
+
+  <link rel="alternate" type="application/rss+xml" title="Hoa M. Le's Personal site" href="http://hoamle.github.io/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+    	<!-- for badge -->
+<!-- 	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+ -->	
+ 		
+ 		
+		
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a href="/index.html">about</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/blog/index.html">blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/project/index.html">projects & publications</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/talk/index.html">talks & tutorials</a>
+		    
+	    
+  	
+	</nav>
+</header>
+
+
+    <article class="group">
+      <h1>Deep Art fun</h1>
+<p class="subtitle">January 16, 2016</p>
+
+<p>Last weekend I finally took some of personal photos and artwork to <em>"paint"</em> them in, but not limited to, Van Gogh style. The "painting" part was actually done by <a href="#deepart">DeepArt algorithm</a> - an inspiring application from <strong>Deep learning</strong> research<label for="sn-id-artomatix" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id-artomatix" class="margin-toggle" /><span class="sidenote">It’s worth to note that Artomatix, Inc. - an Irish startup - had introduced a <a href="(https://youtu.be/un9lSayNOIY?t=51)">similar work</a> several months before DeepArt algorithm was published. </span>. In short, the Deep learning model - a deep neural network - takes your photo (referred as <strong><em>content-image</em></strong> henceforth) and a reference style (combination of 1 or more <strong><em>style-images</em></strong>) as the inputs and produces your photo in that style.</p>
+
+<h2 id="demo">Demo</h2>
+<p>I used <a href="https://github.com/jcjohnson/neural-style">jcjohnson’s implementation</a> of DeepArt algorithm for this demo.</p>
+
+<p>Here we have the content-image on the top-left, the style-image is an artwork by artist Leonid Afremov on the top-right, and the photo generated in Afremov's style at the bottom.<br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/exeter.jpg" height="150" /> <img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/Afremov2.jpg" height="150" /><br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/exeter-afremov2.png" width="460" /></p>
+
+<p>The machine did not “paint” the picture out of the blue, it's an iterative learning process. In short, it starts with a blank (noisy) canvas and tries to learn prominent features in both content-image and style-image(s) and present them on the final product. That learning process is mathematically expressed as optimization process of a function representing the combined <em>similarity</em> between the output and the inputs. Optimizing such function requires an algorithm which goes through series of updating iterations, visualized in the following gif.</p>
+
+<p><img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/exeter_afremov2.gif" width="460" /></p>
+
+<h2 id="more-images">More images</h2>
+<p><em>Note:</em> Due to hardware constrainst, most of images below were generated from <em>non-optimal</em> configs, thus did not yield their best output. I will be updating results from optimal configs soon enough.</p>
+
+<p><strong>Style image</strong>: <a href="https://www.behance.net/gallery/13033419/Selected-Artworks-2013-Oil-Acrylic-Watercolor">creativemints</a>'s<br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/potr.jpg" height="150" /> <img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/lostquilt_at_pinterest.jpg" height="150" /><br />
+<small>produced by NIN model (non-optimal config)</small><br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/potr-lostquilt.png" width="410" /> <br />
+<small>produced by VGG-19 model (more optimal config)</small><br />
+<img src="/assets/img/lostquilt.png" width="410" /></p>
+
+<p><em>(Old images)</em> <label for="mn-hardware" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn-hardware" class="margin-toggle" /><span class="marginnote"><em>Technical bit:</em> Old images were produced by NIN model + Adam optimization. If hardware constrainst is not a problem, visual results should be <em>considerably <strong>improved</strong></em>  by using VGG-19 model + L-BFGS optimization. </span><br />
+<strong>Style image</strong>: Leonid Afremov's<br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/pedals.jpg" height="150" /> <img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/Afremov4.jpg" height="150" /><br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/pedals-afremov4.png" width="460" /></p>
+
+<p><strong>Style image</strong>: Van Gogh's Starry Night <br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/exe_quay.jpg" height="150" /> <img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/starry_night.jpg" height="150" /><br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/exe_quay-starrynight.png" width="495" /></p>
+
+<p><strong>Style image</strong>: Van Gogh's Starry Night<br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/london.jpg" height="150" /> <img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/starry_night.jpg" height="150" /> <br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/london-starry.png" width="495" /></p>
+
+<p><strong>Style image</strong>: Van Gogh's Wheat Field with Crows<br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/camb.jpg" height="150" /> <img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/vangogh_Wheat_Field_with_Crows.jpg" height="150" /> <br />
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/camb-vangogh_wheatfield.png" width="575" /></p>
+
+<!-- 
+**Style image**: Picasso\'s Self-portrait
+<br/>
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/figure.jpg" height="300"> <img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/picasso_selfport1907.jpg" height="300"> => 
+<img src="https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/figure-picasso_selfportr.png" height="400">
+ -->
+
+<h2 id="observation">Observation</h2>
+<ul>
+  <li><strong>Size matters</strong>. The higher the output image resolution, the more details in the content-image can be explicitly expressed by the indicated style. However, memory is a <em>big</em> trade-off. Default output image size (max. 512px-wide) on an NIN took as small as 5-600MB, but a 784px image devours 3 times as much!</li>
+  <li>For visual appeal, (i) an <strong>expressive</strong> style and/or (ii) <strong>resemblance</strong> between content-<strong>Style image</strong> pair is the key. "Expressive" here is not only about abstract or surreal in specific, but about texture i.e. discernible patterns in colors, strokes, blobs in general. Example work: <em>Leonid Afremov's painting, The Scream, Monet's water lilies,</em> etc. Eventually, using style-images referenced from complicated realism pieces by the old masters, e.g. Jean Leon Gerome, usually  yields unsatisfiying results. Secondly, although not always, content- and style-images of similar semantics pair well with each other. For example, a landscape picture should play along well with Starry Night or Wheat Field and the Crows; a portrait and one of Picasso's self-portraits also make a nice combination.</li>
+  <li>I drool over a Titan X.</li>
+</ul>
+
+<h2 id="hardware-setup">Hardware setup</h2>
+<p>The main work-horse is a humble 2GB nVidia GTX 660 GPU<label for="sn-gpu" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-gpu" class="margin-toggle" /><span class="sidenote">i.e. common video graphic card for gaming </span> plugged in a dated LGA 775 desktop. <del>Each image was generated in ~90 seconds (for a 512px-image) or 2-3 mins (for a 784px-image)</del><label for="sn-id-advances" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id-advances" class="margin-toggle" /><span class="sidenote"><a href="https://github.com/jcjohnson/fast-neural-style">Recent advances</a> have largely reduce generation time down to just <em>a few seconds</em> </span>. GPU(s) with generous memory is desirable.</p>
+
+<p>It's <em>much</em> faster to run DeepArt algorithm on GPU(s) instead of common CPUs. Even a modern i7 K-series can take upto hour to train and generate 1 image of above sizes. However, running on CPU can take advantages of <em>abundant</em> host memory (easily &gt;8GB on a single machine), not to mention the possibility to be accompanied with a coprocessor (eg: Xeon Phi), or running on distributed platform.</p>
+
+<h2 id="a-namerefsreferencesa"><a name="refs">References</a></h2>
+<p><a name="deepart"><a href="http://arxiv.org/abs/1508.06576">A Neural Algorithm of Artistic Style</a> (Gatys et al, 2015) i.e. DeepArt algorithm
+</a></p>
+
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//hoamle.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">Deep Art fun - January 16, 2016 - Hoa M. Le</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:hoamle@outlook.com"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//linkedin.com/in/hoamle"><span class="icon-googleplus"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/hoamle"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed.xml"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2017 &nbsp;&nbsp;HOA M. LE</span></br> <br>
+<span>This site is created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme for  </a> <a href="//jekyllrb.com">Jekyll</a>.</span>
+</div>  
+</footer>
+  </body>
+</html>

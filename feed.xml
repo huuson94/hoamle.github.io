@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hoa M. Le&#39;s Personal site</title>
+    <description></description>
+    <link>http://hoamle.github.io/</link>
+    <atom:link href="http://hoamle.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 19 Feb 2017 19:57:25 +0000</pubDate>
+    <lastBuildDate>Sun, 19 Feb 2017 19:57:25 +0000</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Primer on Building a Machine Learning Solution</title>
+        <description>&lt;p&gt;This week introduces &lt;strong&gt;high-level overview of building a Machine Learning (ML) solution&lt;/strong&gt; for a problem, summarized by the following diagram and demo’ed with &lt;a href=&quot;http://scikit-learn.org/stable/index.html&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;scikit-learn&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;figure&gt;&lt;figcaption&gt;&lt;/figcaption&gt;&lt;img src=&quot;/assets/img/week1-2.png&quot; /&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;N.B.&lt;/strong&gt;&lt;label for=&quot;mn-id-glossary&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-id-glossary&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;Visit &lt;a href=&quot;https://hoamle.github.io/articles/17/machine-learning-appendix/#glossary&quot;&gt;MLglossary&lt;/a&gt; for a summary of the math notations. The MLglossary also lists common terms in ML with their synonyms or strongly related concepts. Because ML is an interdisplinary field, there are many different terminologies, which come from the relevant fields of research, that are actually &lt;em&gt;equivalent&lt;/em&gt;. &lt;/span&gt; We will gradually &lt;em&gt;rephrase&lt;/em&gt; every-day language with equivalent ML terminologies and their &lt;em&gt;math notations&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Don’t be afraid of Math, embrace it. Math is (1) an &lt;strong&gt;efficient, universal and unanimously understood&lt;/strong&gt; language. Once we rephrase a problem in mathematical toungue, we may see hidden  connections between numerous of &lt;em&gt;supposedly&lt;/em&gt; unrelated problems in different fields &lt;a href=&quot;https://1drv.ms/b/s!ApOZHae4ogqZ3AJg76xtDPEzSlH-&quot;&gt;[DAslides:pp22-38]&lt;/a&gt;. Further more, Math is (2) &lt;strong&gt;non-ambiguous&lt;/strong&gt; so that we can approach a solution of a problem with transparent and concrete reasoning. Nevertheless, always explain the math we use (or encounter) in our usual natural language if possible, so that we can imprint the &lt;strong&gt;underlying intuition&lt;/strong&gt; and not getting lost in the technical details that follow.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;em&gt;Author’s comment&lt;/em&gt;: Machines are born “dumb”. The more &lt;em&gt;we&lt;/em&gt; - as human being - want more intelligent machines that can support us without much of the human’s guidance, the more we need to mentor them by, at least, speaking explicitly in a language that machines can understand. Math is a much more machine-understandable language than our every-day natural languages. &lt;em&gt;Lesson&lt;/em&gt;: there is no escaping from math if we want to advance in ML.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;case-study&quot;&gt;Case-study&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Identify a flower type based on its attributes&lt;/strong&gt; which are petal and sepal size.&lt;br /&gt;
+&lt;small&gt;Ref: &lt;a href=&quot;http://scikit-learn.org/stable/tutorial/basic/tutorial.html&quot;&gt;http://scikit-learn.org/stable/tutorial/basic/tutorial.html&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/Petal-sepal.jpg&quot; width=&quot;360&quot; /&gt; &lt;br /&gt;
+ &lt;small&gt;(“which flower is this?” - photo from &lt;a href=&quot;https://www.bing.com/images/search?view=detailV2&amp;amp;ccid=E8dlW334&amp;amp;id=690CFCA2C5419961A77E0534DC3B6AD1B61FA711&amp;amp;q=sepal&amp;amp;simid=608048017631022285&amp;amp;selectedIndex=5&amp;amp;ajaxhist=0&quot;&gt;bing&lt;/a&gt;)&lt;/small&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Experience&lt;/strong&gt; i.e &lt;strong&gt;Training data&lt;/strong&gt;&lt;label for=&quot;mn-trainset&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-trainset&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;training data/training set&lt;/em&gt; &lt;/span&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;iris&lt;/code&gt; dataset - a dataset that contain information about certain types of flower&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;iris_dataset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_iris&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;First, study our data, so that we can &lt;strong&gt;pre-process&lt;/strong&gt;&lt;label for=&quot;mn-preprocess&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-preprocess&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;data preprocessing&lt;/em&gt; &lt;/span&gt; the data provided. In this step, we might need to manipulate the raw data to extract important information, or normalize following certain standard. The purpose is (but not limited to) to prepare the data in proper formats for later implementation.&lt;/p&gt;
+
+&lt;p&gt;For demonstration purpose, we are using a “&lt;em&gt;clean”&lt;/em&gt; dataset (already stored in structured format, no missing or suspicious values), so we only need to do minimal data pre-processing. Reminded that it is most likely &lt;em&gt;not&lt;/em&gt; the case in practice &lt;a href=&quot;https://1drv.ms/b/s!ApOZHae4ogqZ3AJg76xtDPEzSlH-&quot;&gt;[DAslides:p11]&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;study-the-data&quot;&gt;Study the data&lt;/h3&gt;
+
+&lt;p&gt;Read the “docs” i.e. data description&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# print(iris_dataset)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris_dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;DESCR&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# the &quot;doc&quot; is quite long, so I &lt;/span&gt;
+                                  &lt;span class=&quot;c&quot;&gt;# only extract the first 1000 &lt;/span&gt;
+                                  &lt;span class=&quot;c&quot;&gt;# characters for demonstration purpose    &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Iris Plants Database
+
+Notes
+-----
+Data Set Characteristics:
+    :Number of Instances: 150 (50 in each of three classes)
+    :Number of Attributes: 4 numeric, predictive attributes and the class
+    :Attribute Information:
+        - sepal length in cm
+        - sepal width in cm
+        - petal length in cm
+        - petal width in cm
+        - class:
+                - Iris-Setosa
+                - Iris-Versicolour
+                - Iris-Virginica
+    :Summary Statistics:
+
+    ============== ==== ==== ======= ===== ====================
+                    Min  Max   Mean    SD   Class Correlation
+    ============== ==== ==== ======= ===== ====================
+    sepal length:   4.3  7.9   5.84   0.83    0.7826
+    sepal width:    2.0  4.4   3.05   0.43   -0.4194
+    petal length:   1.0  6.9   3.76   1.76    0.9490  (high!)
+    petal width:    0.1  2.5   1.20  0.76     0.9565  (high!)
+    ============== ==== ==== ======= ===== ====================
+
+    :Missing Attribute Values: None
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Observe:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; There are 150 examples i.e. &lt;em&gt;data points&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; Each flower is described by &lt;script type=&quot;math/tex&quot;&gt;P=4&lt;/script&gt; attributes i.e. &lt;strong&gt;features&lt;/strong&gt;&lt;label for=&quot;mn-feature&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-feature&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;features&lt;/em&gt; &lt;/span&gt; or &lt;em&gt;predictors&lt;/em&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;sepal length&lt;/code&gt; (&lt;script type=&quot;math/tex&quot;&gt;x_{1}&lt;/script&gt;), &lt;code class=&quot;highlighter-rouge&quot;&gt;sepal width&lt;/code&gt; (&lt;script type=&quot;math/tex&quot;&gt;x_{2}&lt;/script&gt;), &lt;code class=&quot;highlighter-rouge&quot;&gt;petal length&lt;/code&gt; (&lt;script type=&quot;math/tex&quot;&gt;x_{3}&lt;/script&gt;), &lt;code class=&quot;highlighter-rouge&quot;&gt;petal width&lt;/code&gt; (&lt;script type=&quot;math/tex&quot;&gt;x_{4}&lt;/script&gt;).&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; All 4 features’ measures are conceptually similar (numeric, real values that lie in the same domain), so no &lt;strong&gt;data normalization&lt;/strong&gt;&lt;label for=&quot;mn-norm&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-norm&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;data normalization&lt;/em&gt; &lt;/span&gt; required.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; There are &lt;script type=&quot;math/tex&quot;&gt;K=3&lt;/script&gt; types i.e. &lt;strong&gt;classes&lt;/strong&gt;&lt;label for=&quot;mn-class&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-class&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;class, label&lt;/em&gt; &lt;/span&gt; of flower, which are &lt;code class=&quot;highlighter-rouge&quot;&gt;setosa&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;versicolor&lt;/code&gt;, and  &lt;code class=&quot;highlighter-rouge&quot;&gt;virginica&lt;/code&gt; - represented by ID &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;2&lt;/code&gt; respectively. Note: each flower is &lt;strong&gt;labelled&lt;/strong&gt; by a &lt;em&gt;single&lt;/em&gt; ID, indicating that a flower can only be member of 1 type.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris_dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;data&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# each row in `iris_dataset[&#39;data&#39;]` is &lt;/span&gt;
+                                   &lt;span class=&quot;c&quot;&gt;# a feature vector of the respective flower&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris_dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;target_names&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris_dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;target&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(150L, 4L)
+[&#39;setosa&#39; &#39;versicolor&#39; &#39;virginica&#39;]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
+ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+ 2 2]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We write the features as a feature vector &lt;script type=&quot;math/tex&quot;&gt;x=\left(x_{1},x_{2},x_{3},x_{4}\right)^{T}&lt;/script&gt;. Vector &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; is a &lt;strong&gt;representation&lt;/strong&gt;&lt;label for=&quot;mn-representation&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-representation&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;data representation&lt;/em&gt; &lt;/span&gt; of a flower i.e. a summary of this flower attributes. We extract and store all feature vectors to a 2D-array&lt;label for=&quot;sn-id-2d&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-id-2d&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;2D-array&lt;/code&gt; can be understood as a table-like data structure &lt;/span&gt; &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;, where the &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;-th row corresponds to feature vector &lt;script type=&quot;math/tex&quot;&gt;x^{\left(n\right)}&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;font color=&quot;red&quot;&gt;Note&lt;/font&gt;&lt;/em&gt;: In this course, we use capital letters, e.g. &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; to represent a set of data points rather than a matrix as usual. If we imply the latter, it should be clear from the context.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;X&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iris_dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;data&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;X&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(150L, 4L)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We extract and store all the labels to an 1D-array&lt;label for=&quot;sn-id-labels&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-id-labels&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;In actual implementation (which we won’t see in this week example), &lt;script type=&quot;math/tex&quot;&gt;Y&lt;/script&gt; is almost always converted to an equivalent 2D-array implicitly, where each column is a binary indicator (e.g. {1, 0}) of a respective class in all examples. &lt;/span&gt; &lt;script type=&quot;math/tex&quot;&gt;Y&lt;/script&gt;, where the &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;-th element indicates flower type &lt;script type=&quot;math/tex&quot;&gt;y^{\left(n\right)}&lt;/script&gt;. &lt;em&gt;&lt;font color=&quot;red&quot;&gt;Note&lt;/font&gt;&lt;/em&gt;: the order of all &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;’s in &lt;script type=&quot;math/tex&quot;&gt;Y&lt;/script&gt; must match with the counterparts in &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iris_dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;target&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(150L,)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now we can define our problem more precisely by the language of math&lt;/p&gt;
+
+&lt;h3 id=&quot;define-the-problem&quot;&gt;Define the problem&lt;/h3&gt;
+
+&lt;p&gt;Given any attribute &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt;, we would like to &lt;strong&gt;predict&lt;/strong&gt; a corresponding prediction &lt;script type=&quot;math/tex&quot;&gt;\hat{y}\in&lt;/script&gt;  {&lt;code class=&quot;highlighter-rouge&quot;&gt;setosa&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;versicolor&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;virginica&lt;/code&gt;} by a ML &lt;code class=&quot;highlighter-rouge&quot;&gt;Model&lt;/code&gt; In order to know if our model has good predictive performance, we need an &lt;code class=&quot;highlighter-rouge&quot;&gt;Assessment&lt;/code&gt; to measure the performance.  In this problem, we can measure the performance by an &lt;strong&gt;evaluation metric&lt;/strong&gt;&lt;label for=&quot;mn-metric&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-metric&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;evaluation metrics&lt;/em&gt; &lt;/span&gt; called &lt;a href=&quot;http://scikit-learn.org/stable/modules/model_evaluation.html#accuracy-score&quot;&gt;&lt;em&gt;Accuracy&lt;/em&gt;&lt;/a&gt;, which&lt;/p&gt;
+
+&lt;div class=&quot;mathblock&quot;&gt;&lt;script type=&quot;math/tex; mode=display&quot;&gt;\text{Accuracy}=\dfrac{1}{N}\sum_{n}\mathbb{1}\left(\hat{y}^{\left(n\right)}=y^{\left(n\right)}\right)&lt;/script&gt;&lt;/div&gt;
+
+&lt;p&gt;The value of this metric increases every time we correctly identify a flower type. A prediction is correct if predicted type &lt;script type=&quot;math/tex&quot;&gt;\hat{y}&lt;/script&gt; of a flower is the same as its actual type &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt;.&lt;/p&gt;
+
+&lt;figure&gt;&lt;figcaption&gt;&lt;/figcaption&gt;&lt;img src=&quot;/assets/img/week1-1.png&quot; /&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;em&gt;&lt;font color=&quot;red&quot;&gt;Note&lt;/font&gt;&lt;/em&gt;&lt;label for=&quot;mn-id-metrics&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-id-metrics&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;Many problems require 2 or more metrics for an objective assessment. &lt;/span&gt;: while Accuracy is appropriate for this particular problem, other problems may require some other evaluation metric. For example, in case wewant to identify whether a patient has cancer or not, we may want to minimize the risk of missing true cases (patients who actually have cancer - True Positive cases) as much as possible. In this case, &lt;a href=&quot;http://scikit-learn.org/stable/modules/model_evaluation.html#precision-recall-f-measure-metrics&quot;&gt;&lt;em&gt;Recall&lt;/em&gt;&lt;/a&gt; is a better measure of performance than Accuracy.&lt;/p&gt;
+
+&lt;p&gt;In order to build a model that perform well, we need to &lt;strong&gt;train&lt;/strong&gt;&lt;label for=&quot;sn-id-knn&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-id-knn&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;Note: &lt;em&gt;k-nearest neighbours&lt;/em&gt; - a common ML algorithm - is an exception such that the algorithm virtually does not perform any kind of learning. While the algorithm has its own mertis, it does not scale to address high-dimensional inputs or non-trivial semantic recognition problems. Read more: &lt;a href=&quot;http://cs231n.github.io/classification/#nn&quot;&gt;[cs231n]&lt;/a&gt; &lt;/span&gt; it by utilizing the &lt;em&gt;experience&lt;/em&gt; that the model has. In other word, the model needs to improve its performance by &lt;em&gt;learning&lt;/em&gt; from the &lt;em&gt;training data&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;\mathcal{D}_{\text{train}}=\left\{ x^{\left(n\right)},y^{\left(n\right)}\right\}&lt;/script&gt; from an initial “naive” state. This task is called, unsurprisingly, &lt;strong&gt;learning&lt;/strong&gt;&lt;label for=&quot;mn-id-learning&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-id-learning&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;learning&lt;/em&gt; &lt;/span&gt;, and is also commonly called &lt;strong&gt;fitting&lt;/strong&gt;.&lt;/p&gt;
+&lt;figure&gt;&lt;figcaption&gt;&lt;/figcaption&gt;&lt;img src=&quot;/assets/img/week1-2.png&quot; /&gt;&lt;/figure&gt;
+
+&lt;p&gt;A ML algorithm is not only required to perform well on the training data, but also on the &lt;em&gt;new, unseen data&lt;/em&gt; that it has never encountered (i.e. not in the training set). Those unseen data that could be used to assess a model performance are called &lt;strong&gt;test data&lt;/strong&gt;&lt;label for=&quot;mn-id-testset&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-id-testset&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;test data/test set&lt;/em&gt; &lt;/span&gt;. High performance on test data is important, because it is an indicator for the model’s ability to  &lt;strong&gt;generalize&lt;/strong&gt; to arbitrary data examples.&lt;/p&gt;
+
+&lt;p&gt;For demonstration purpose, we will use a small subset of &lt;code class=&quot;highlighter-rouge&quot;&gt;iris&lt;/code&gt; dataset as test data. The remaining will serve as training data.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Randomly pick 20% of the examples as test data, and train&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# on the remaining 80%.&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.cross_validation&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# note: sklearn 0.18 moved `train_test_split` to &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# `sklearn.model_selection` module &lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;indicies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;xrange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris_dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;data&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;train_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_idx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;indicies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                     &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  
+&lt;span class=&quot;c&quot;&gt;# Each time we run `train_test_split`, a new split is produced &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# randomly and is different from the previous run. Therefore, &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# it is essential to assign a `random_state` to make our work &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# reproducible on other machines or for later use. &lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Use capital letter e.g. `X` to indicate set of data points.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;D_train&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;X&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;X&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+           &lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+           &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;D_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;X&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;X&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Test set size: {} examples&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Test set size: 30 examples
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this week example demo, we use and train a model called &lt;strong&gt;Softmax Regression&lt;/strong&gt;. For now, we can simply understand Softmax Regression as a “black-box” ML algorithm that can do our prediction problem. &lt;em&gt;“What are assumptions on model structure? How was learning task done? Can we do better than standard Softmax Regression?, etc”&lt;/em&gt; are the topics for next weeks.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.linear_model&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogisticRegression&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Softmax regression is a multi-class generalization of &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Logistic Regression model&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# initialize a &quot;naive&quot; model&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogisticRegression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;multi_class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;multinomial&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                          &lt;span class=&quot;n&quot;&gt;solver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lbfgs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;learning&quot;&gt;Learning&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;D_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;X&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;D_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# after `.fit`, the model has finished its learning&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Learning finished!&lt;/p&gt;
+
+&lt;h3 id=&quot;prediction&quot;&gt;Prediction&lt;/h3&gt;
+&lt;p&gt;Now try indentifying a new, unseen flower with feature &lt;script type=&quot;math/tex&quot;&gt;x^{\left(\text{test}\right)}&lt;/script&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;x_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;D_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;X&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[ 5.8  4.   1.2  0.2]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;y_pred&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;assessment&quot;&gt;Assessment&lt;/h3&gt;
+
+&lt;p&gt;Our model &lt;code class=&quot;highlighter-rouge&quot;&gt;predict&lt;/code&gt;s that the flower whose petal and sepal size are as described by &lt;script type=&quot;math/tex&quot;&gt;x^{\left(\text{test}\right)}&lt;/script&gt; is a “setosa” (&lt;code class=&quot;highlighter-rouge&quot;&gt;id: 0&lt;/code&gt;). &lt;strong&gt;Is this true?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_pred&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;D_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[ True]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Good news! But what about prediction for other flowers?&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Y_pred&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;D_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;X&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Flower&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Predict&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Actual&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Correct prediction?&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;xrange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;{}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;test_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; 
+            &lt;span class=&quot;n&quot;&gt;Y_pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;D_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Y_pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;D_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Flower  Predict Actual  Correct prediction?
+14      0       0       True    
+98      1       1       True    
+75      1       1       True    
+16      0       0       True    
+131     2       2       True    
+56      1       1       True    
+141     2       2       True    
+44      0       0       True    
+29      0       0       True    
+120     2       2       True    
+94      1       1       True    
+5       0       0       True    
+102     2       2       True    
+51      1       1       True    
+78      1       1       True    
+42      0       0       True    
+92      1       1       True    
+66      1       1       True    
+31      0       0       True    
+35      0       0       True    
+90      1       1       True    
+84      1       1       True    
+77      2       1       False   
+40      0       0       True    
+125     2       2       True    
+99      1       1       True    
+33      0       0       True    
+19      0       0       True    
+73      1       1       True    
+146     2       2       True    
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Our model correctly indentifies 29 examples and makes 1 error out of 30 testing examples, achieving an Accuracy of &lt;script type=&quot;math/tex&quot;&gt;\dfrac{1}{N}_{\text{test}}\sum_{n}\mathbb{1}\left(\hat{y}^{\left(n\right)}=y^{\left(n\right)}\right)=29/30=96.7\%&lt;/script&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Y_pred&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;D_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Y&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0.96666666666666667
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;(comment: The performance is pretty impressive, but let hold off from a pre-matured assessment! See &lt;a href=&quot;#conclusion&quot;&gt;Conclusion&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;a-hrefconclusionconclusiona&quot;&gt;&lt;a href=&quot;#conclusion&quot;&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;To summarize, we have completed the most basic steps to build a ML solution for our problem as specified by this diagram&lt;/p&gt;
+&lt;figure&gt;&lt;figcaption&gt;&lt;/figcaption&gt;&lt;img src=&quot;/assets/img/week1-2.png&quot; /&gt;&lt;/figure&gt;
+
+&lt;p&gt;Specifically, we studied a (single-label) &lt;code class=&quot;highlighter-rouge&quot;&gt;multi-class classification&lt;/code&gt;&lt;label for=&quot;sn-id-slmc&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-id-slmc&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;When ones refer to a &lt;code class=&quot;highlighter-rouge&quot;&gt;multi-class classification&lt;/code&gt; problem, we implicit understand that it is a single-label problem. The more generalized classification problem is called &lt;code class=&quot;highlighter-rouge&quot;&gt;multi-label multi-class classification&lt;/code&gt;, which we will not cover in this series. &lt;/span&gt; problem which require us to build a ML model that can predict a flower type based on its sepal and petal measurements. As a solution for this problem, we used and trained a Softmax Regression &lt;code class=&quot;highlighter-rouge&quot;&gt;Model&lt;/code&gt;, did &lt;code class=&quot;highlighter-rouge&quot;&gt;Assessment&lt;/code&gt; on &lt;em&gt;one&lt;/em&gt; split of test set, measured the performance with Accuracy metric, and achieved impressive predictive Accuracy of &lt;script type=&quot;math/tex&quot;&gt;96.7\%&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;However, there still exist &lt;strong&gt;fundamental&lt;/strong&gt; questions that we need to address:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Is &lt;script type=&quot;math/tex&quot;&gt;96.7\%&lt;/script&gt; a &lt;em&gt;reliable&lt;/em&gt; estimate for our model accuracy on &lt;strong&gt;other test sets&lt;/strong&gt;?&lt;label for=&quot;sn-id-assess&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-id-assess&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;TODO link to Part 4 &lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;How is Softmax Regression model &lt;strong&gt;constructed&lt;/strong&gt;?&lt;label for=&quot;sn-id-buildmodel&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-id-buildmodel&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;TODO link to Part 2 &lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;In a problem for which &lt;strong&gt;assumptions&lt;/strong&gt; imposed by Softmax Regression model do &lt;strong&gt;not suffice&lt;/strong&gt;, how can we do better?&lt;label for=&quot;sn-id-nonlinear&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-id-nonlinear&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;TODO link to Part 3 &lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;How can &lt;em&gt;we&lt;/em&gt; - as the human - &lt;strong&gt;interpret&lt;/strong&gt; the contribution of the features to the prediction, or extract human-perceivable semantics that the features may hold? &lt;label for=&quot;sn-id-nonlinear&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-id-nonlinear&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;TODO link to Part 5 &lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;(other issues that would arise when approaching above questions)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;These questions define the topics for next parts of this series. In each part, we will be approaching different &lt;em&gt;multi-class classification&lt;/em&gt; problems as case-studies for the relevant topics. The same reasoning and principles also straightforwardly apply to &lt;em&gt;binary classification&lt;/em&gt;, &lt;em&gt;regression&lt;/em&gt;, and &lt;em&gt;clustering&lt;/em&gt; problems, which is left as homework for the readers.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
+        <link>http://hoamle.github.io/articles/17/primer-on-building-ml-solutions</link>
+        <guid isPermaLink="true">http://hoamle.github.io/articles/17/primer-on-building-ml-solutions</guid>
+        
+        
+        <category>technical</category>
+        
+      </item>
+    
+      <item>
+        <title>Machine learning appendix</title>
+        <description>&lt;p&gt;For personal use, but suggestions are highly appreciated.&lt;br /&gt;
+&lt;em&gt;(to be updated sporadically)&lt;/em&gt;&lt;br /&gt;
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;a-hrefglossaryglossary-of-common-terms-and-notationsa&quot;&gt;&lt;a href=&quot;#glossary&quot;&gt;Glossary of common terms and notations&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Each row lists the terms that are &lt;em&gt;synonyms&lt;/em&gt; (or &lt;em&gt;&lt;font color=&quot;red&quot;&gt;strongly related&lt;/font&gt;&lt;/em&gt;)&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; For brevity, we write &lt;script type=&quot;math/tex&quot;&gt;\text{Pr}\left(x\right)&lt;/script&gt;, instead of &lt;script type=&quot;math/tex&quot;&gt;\text{Pr}\left(X=x\right)&lt;/script&gt; as normally seen in statistical texts. Nevertheless, we should not do so when working on e.g. theoretical foundation of model robustness to avoid confusion.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Term&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Common notations and more information (if any)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;estimation/prediction/inference of a quantity&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;the quantity with a “hat” eg. &lt;script type=&quot;math/tex&quot;&gt;\hat{y}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\hat{\theta}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\text{Pr}\left(y\left|x,\hat{\theta}\right.\right)&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;ước lượng/dự đoán/suy diễn một đại lượng nào đấy&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;objective function, error function, loss function, cost function&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;J\left(\cdot\right)&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;L\left(\cdot\right)&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;l\left(\cdot\right)&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;hàm mục tiêu, hàm lỗi, hàm tổn thất, hàm chi phí&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;learning, training; &lt;font color=&quot;red&quot;&gt;related&lt;/font&gt;:  parameter estimation&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;học mô hình, huấn luyện mô hình, ước lượng tham số&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;evaluating, forward pass - &lt;em&gt;as in&lt;/em&gt; “computing some quantity given estimates of all unknown quantities”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;font color=&quot;red&quot;&gt;note&lt;/font&gt;: not to be confused with &lt;code class=&quot;highlighter-rouge&quot;&gt;performance evaluation&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;tính toán, chiều xuôi&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;score function; &lt;font color=&quot;red&quot;&gt;related&lt;/font&gt;: (inverse) link function&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;s\left(\cdot\right)&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;g\left(\cdot\right)&lt;/script&gt; if link function&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;hàm tính điểm, hàm liên kết&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;neuron/unit; &lt;font color=&quot;red&quot;&gt;related&lt;/font&gt;: dimension (of a vector)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;x_{d}&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;d&lt;/script&gt; is a dimesion of vector &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;nơ-ron, chiều (của một vec-tơ)&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;feature; &lt;font color=&quot;red&quot;&gt;related&lt;/font&gt;: independent variable, explanatory variable, predictor&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;x_{d}&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;d&lt;/script&gt; is a dimesion of vector &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt;. &lt;font color=&quot;red&quot;&gt;note&lt;/font&gt;: in practice, most of the time we imply &lt;code class=&quot;highlighter-rouge&quot;&gt;feature&lt;/code&gt; as &lt;code class=&quot;highlighter-rouge&quot;&gt;feature vector&lt;/code&gt;, thus use vector &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; instead&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;vec-tơ đặc trưng, biến độc lập, biến giải thích, nhân tố giải thích&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;mid-/high-level feature, hidden/latent variable; &lt;font color=&quot;red&quot;&gt;related&lt;/font&gt;: hidden neuron&lt;strong&gt;s&lt;/strong&gt;/unit&lt;strong&gt;s&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;z&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;h&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; if assumed a random variable&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;đặc trưng bậc trung hoặc bậc cao, biến ẩn, các nơ-ron ẩn&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;target, label; &lt;font color=&quot;red&quot;&gt;related&lt;/font&gt;: dependent variable, response variable&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;mục tiêu, nhãn, biến phụ thuộc, biến (?)&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;observed data/variable(s),&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\mathcal{D}&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; if supervised learning&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;dữ liệu/biến quan sát được (đã biết)&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;unobserved data/variable(s)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\tilde{\mathcal{D}}&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;\tilde{\mathcal{x}}&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;x&#39;&lt;/script&gt; ; or &lt;script type=&quot;math/tex&quot;&gt;x^{\left(\text{new}\right)}&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;dữ liệu/biến không quan sát được (chưa biết)&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;data point&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; ; or (if working with more than 1 data point) &lt;script type=&quot;math/tex&quot;&gt;x^{\left(n\right)}&lt;/script&gt;, or &lt;script type=&quot;math/tex&quot;&gt;x_{n}&lt;/script&gt; if &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; represents a set of data points&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;điểm dữ liệu&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;parameter; &lt;font color=&quot;red&quot;&gt;related&lt;/font&gt;: weight, bias (as the “offset” from the origin)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; , &lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;b&lt;/script&gt; respectively&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;tham số, trọng số, độ lệch&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;font color=&quot;red&quot;&gt;note&lt;/font&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;bias&lt;/code&gt; is an &lt;a href=&quot;https://en.wikipedia.org/wiki/Umbrella_term&quot;&gt;umbrella term&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bias&lt;/code&gt; has more &lt;a href=&quot;https://en.wikipedia.org/wiki/Bias_(statistics)&quot;&gt;common meanings&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;parameterized function&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;f\left(x,y\,\mathbf{;}\,\theta\right)&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;hàm có tham số&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;parametric distribution&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;p_{\theta}\left(x\right)&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;phân bố xác suất có tham số&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;back-propogation-algorithm&quot;&gt;Back-propogation algorithm&lt;/h2&gt;
+&lt;p&gt;&lt;label for=&quot;backprop-demo&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;backprop-demo&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;Conditions&lt;/em&gt;: (i) J is differentiable every where w.r.t. theta; (ii) J and all thetas form a directed acyclic computational graph. &lt;/span&gt; &lt;strong&gt;For what&lt;/strong&gt;: computes gradient &lt;span&gt;​&lt;script type=&quot;math/tex&quot;&gt; 
+\nabla_{\theta}J=\dfrac{\partial J}{\partial\theta} &lt;/script&gt;&lt;/span&gt; for &lt;strong&gt;all&lt;/strong&gt; &lt;span&gt;​&lt;script type=&quot;math/tex&quot;&gt; \theta 
+&lt;/script&gt;&lt;/span&gt;’s of interest. &lt;br /&gt;
+[&lt;a href=&quot;#&quot;&gt;Demo&lt;/a&gt;] TODO&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Use case(s)&lt;/em&gt;: update optimal parameter &lt;span&gt;​&lt;script type=&quot;math/tex&quot;&gt; \hat{\theta} &lt;/script&gt;&lt;/span&gt;’s of a neural network (or a certain class of probabilistic models) by gradient descent algorithms;&lt;/p&gt;
+
+&lt;h2 id=&quot;manifold-learning&quot;&gt;Manifold learning&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Manifold Learning&lt;/strong&gt; (often also referred to as &lt;a href=&quot;http://en.wikipedia.org/wiki/Nonlinear_dimensionality_reduction&quot;&gt;&lt;strong&gt;non-linear dimensionality reduction&lt;/strong&gt;&lt;/a&gt;) pursuits the goal to &lt;strong&gt;&lt;em&gt;embed data that originally lies in a high dimensional space in a lower dimensional space&lt;/em&gt;&lt;/strong&gt;, while preserving characteristic properties. This is possible because &lt;em&gt;for any high dimensional data to be interesting, it must be intrinsically low dimensional&lt;/em&gt;. For example, images of faces might be represented as points in a high dimensional space (let’s say your camera has 5MP – so your images, considering each pixel consists of three values [r,g,b], lie in a 15M dimensional space), but not every 5MP image is a face. Faces lie on a sub-manifold in this high dimensional space. A &lt;strong&gt;sub-manifold&lt;/strong&gt; is &lt;strong&gt;&lt;em&gt;locally Euclidean&lt;/em&gt;&lt;/strong&gt;, i.e. if you take two &lt;em&gt;very similar points&lt;/em&gt;, for example two images of identical twins, you can &lt;em&gt;interpolate&lt;/em&gt; between them and still &lt;em&gt;obtain an image on the manifold&lt;/em&gt;, but &lt;strong&gt;&lt;em&gt;globally not Euclidean&lt;/em&gt;&lt;/strong&gt; – if you take two images that are very different — for example &lt;a href=&quot;http://www.anorak.co.uk/wp-content/uploads/2011/07/31.jpeg&quot;&gt;Arnold Schwarzenegger&lt;/a&gt; and &lt;a href=&quot;http://vivirlatino.com/i/2008/11/hillary-clinton.jpg&quot;&gt;Hillary Clinton&lt;/a&gt; – you &lt;em&gt;cannot interpolate&lt;/em&gt; between them&lt;label for=&quot;sn-manifold-global&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-manifold-global&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;The example assumely talked about a “limited” face image manifold right? &lt;/span&gt;.&lt;br /&gt;
+&lt;cite&gt;&lt;a href=&quot;http://www.cs.cornell.edu/~kilian/research/manifold/manifold.html&quot;&gt;(ref)&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
+        <link>http://hoamle.github.io/articles/17/machine-learning-appendix</link>
+        <guid isPermaLink="true">http://hoamle.github.io/articles/17/machine-learning-appendix</guid>
+        
+        
+        <category>technical</category>
+        
+      </item>
+    
+      <item>
+        <title>Computers can Draw (TBE)</title>
+        <description>&lt;p&gt;Survey on the attempts to build an AI artist&lt;br /&gt;
+(Note-to-self: divided into 2 posts)&lt;/p&gt;
+
+&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;AARON (Harold Cohen)&lt;/li&gt;
+  &lt;li&gt;“The Painting Fool” (Simon Colton)&lt;/li&gt;
+  &lt;li&gt;“The Next Rembrandt” (TU Delft)&lt;/li&gt;
+  &lt;li&gt;Probabilistic models&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;modern-advances&quot;&gt;Modern advances&lt;/h2&gt;
+
+&lt;h3 id=&quot;non-photo-realistic-rendering-npr&quot;&gt;Non Photo-realistic Rendering (NPR)&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;physic-based: NPR book&lt;/li&gt;
+  &lt;li&gt;data-driven: texture/style transfer, e.g. Artomatix (Erric Risser et al), Neural Art (Gatys et al)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;generative-probabilistic-model-of-images-separated-post&quot;&gt;Generative probabilistic model of images (separated post)&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Restricted Boltzman Machine (RBM)&lt;/li&gt;
+  &lt;li&gt;Variational Auto Encoder (VAE), Deep Recurrent Attentive Writer (DRAW)&lt;/li&gt;
+  &lt;li&gt;Generative Adversarial Network (GAN)&lt;/li&gt;
+  &lt;li&gt;PixelRNN&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;PPGN&lt;/strong&gt;: Generative net + conditioned + activation maximisation + prior structure = photo-realistic image generation!!&lt;br /&gt;
+(inner-thought: 18-month ago this vague idea of “creative AI” drove me to machine/deep learning, and here we are!!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;applications-in-graphics&quot;&gt;Applications in graphics&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;iGAN (Jun-Yan Zhu et al)&lt;/li&gt;
+  &lt;li&gt;StyLit (Jakub Fišer et al)&lt;/li&gt;
+  &lt;li&gt;Colorisation (various) (note-to-self: r/colorization might be a good place to crawl labelled data)&lt;/li&gt;
+  &lt;li&gt;Texture propagation (Satoshi Iizuaka et al)&lt;/li&gt;
+  &lt;li&gt;Sketch cleaning (Satoshi Iizuaka et al)&lt;/li&gt;
+  &lt;li&gt;Super-resolution&lt;/li&gt;
+  &lt;li&gt;…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(Inner-thought: arghh I’m so eager to finish the current duties, so that I can draft a comprehensive post of this survey)&lt;/p&gt;
+</description>
+        <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+        <link>http://hoamle.github.io/articles/17/computers-can-draw</link>
+        <guid isPermaLink="true">http://hoamle.github.io/articles/17/computers-can-draw</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Essence of Machine Learning (and Deep Learning)</title>
+        <description>&lt;p&gt;Preliminary course for new members at DSLab-HUST. Pre-requisite for courses in &lt;em&gt;Topic models&lt;/em&gt; and (supervised) &lt;em&gt;Deep neural networks&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;This short course aims to introduce new starters to the field of &lt;em&gt;Machine Learning&lt;/em&gt; (ML) with a principled approach, so that ones can understand the motivation and intuition behind ML (and eventually &lt;em&gt;Deep Learning&lt;/em&gt; - DL) concepts,  later learn advanced materials *efficiently*, catch up with recent advances in the field, and be ready to do ML research and/or industrial applications.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Intended learning objectives&lt;/em&gt;: (i) understand and know what constitute of the high-level ML concepts below; (ii) be able to navigate new ML concepts in &lt;a href=&quot;#map&quot;&gt;the Map of Machine Learning&lt;/a&gt;; (iii) - &lt;em&gt;optionally&lt;/em&gt; - articulate the math behind each model or concept, and implement the ML models/algorithms covered in the course properly (expected from students who do the homework and &lt;a href=&quot;#study&quot;&gt;“Study-group” sessions&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h2 id=&quot;a-namemapcore-ml-conceptsa&quot;&gt;&lt;a name=&quot;map&quot;&gt;Core ML concepts&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;label for=&quot;mn-map&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-map&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;TODO draw the Map &lt;/span&gt; We will cover the following concepts. &lt;font color=&quot;red&quot;&gt;Note&lt;/font&gt;: if not stated otherwise, concepts in &lt;strong&gt;&lt;em&gt;bold italic&lt;/em&gt;&lt;/strong&gt; are covered in the prelim course. &lt;a href=&quot;#notes&quot;&gt;Course notes&lt;/a&gt; is be expected in respective blog posts.&lt;/p&gt;
+
+&lt;h3 id=&quot;build-a-machine-learning-model&quot;&gt;Build a Machine Learning model&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Design principle&lt;/strong&gt;: Model &lt;label for=&quot;sn-model&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-model&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;&lt;em&gt;“Model is a simplification of reality”&lt;/em&gt;. Formulate real-life problems as &lt;strong&gt;&lt;em&gt;parametric models&lt;/em&gt;&lt;/strong&gt; (non-parametric models/methods are not covered in this training course series) &lt;/span&gt; = Model “Structure”&lt;label for=&quot;sn-structure&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-structure&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;Relationships between model elements: data, parameters, and hyperparameters.  Relationships can either be &lt;em&gt;deterministic&lt;/em&gt; or &lt;em&gt;stochastic&lt;/em&gt;, and are visualized graphically by &lt;strong&gt;&lt;em&gt;graphical models&lt;/em&gt;&lt;/strong&gt;. &lt;/span&gt; + Learning Framework&lt;label for=&quot;sn-framework&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-framework&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;Examples: &lt;strong&gt;&lt;em&gt;probabilistic modelling&lt;/em&gt;&lt;/strong&gt;, &lt;em&gt;metric learning&lt;/em&gt; (not covered in prelim course) &lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Learning task&lt;/em&gt;&lt;/strong&gt; and &lt;strong&gt;&lt;em&gt;Inference task(s)&lt;/em&gt;&lt;/strong&gt;&lt;label for=&quot;sn-estimate&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-estimate&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;Find/compute &lt;em&gt;unknown&lt;/em&gt; parameter and/or &lt;strong&gt;&lt;em&gt;latent variable&lt;/em&gt;&lt;/strong&gt; estimates (&lt;em&gt;learning task&lt;/em&gt;) of the model, and other quantities of interest (&lt;em&gt;inference tasks&lt;/em&gt;), e.g. predictive outcomes, posterior distribution of model parameters, etc. &lt;/span&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;evaluate-performance-of-a-model&quot;&gt;Evaluate performance of a model&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Assessment metrics&lt;/em&gt;&lt;/strong&gt;: which metrics to measure the performance?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Analyze results&lt;/em&gt;&lt;/strong&gt;: are the results meaningful&lt;label for=&quot;sn-meaningful&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-meaningful&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;in terms of &lt;em&gt;statistical&lt;/em&gt; significance, interpretability, or interesting observation &lt;/span&gt;  and legitimate&lt;label for=&quot;sn-analyze&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-analyze&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;We will touch on &lt;strong&gt;&lt;em&gt;experimental design&lt;/em&gt;&lt;/strong&gt; &lt;/span&gt;?&lt;/p&gt;
+
+&lt;h3 id=&quot;regularize-a-model&quot;&gt;Regularize a model&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; to fight &lt;strong&gt;&lt;em&gt;overfitting&lt;/em&gt;&lt;/strong&gt; issue. Example approaches: weight penalty, &lt;strong&gt;&lt;em&gt;Bayesian modelling&lt;/em&gt;&lt;/strong&gt;&lt;label for=&quot;sn-bayes&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-bayes&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;We will also see Bayesian modelling, and eventually &lt;em&gt;Bayesian inference&lt;/em&gt;, when building &lt;strong&gt;&lt;em&gt;generative models&lt;/em&gt;&lt;/strong&gt; for clustering problem &lt;/span&gt;, Early-stopping, Data augmentation, Dropout; or&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; to achieve some interpretability via &lt;em&gt;sparsity&lt;/em&gt;&lt;label for=&quot;sn-sparse&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-sparse&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;covered in Topic Models course &lt;/span&gt;; or&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; to achieve &lt;a href=&quot;https://en.wikipedia.org/wiki/Regularization*(mathematics)&quot;&gt;other objectives&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;optimize-for-more-performance&quot;&gt;Optimize for more performance&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Model selection&lt;/em&gt;&lt;/strong&gt; and &lt;em&gt;Model ensemble&lt;/em&gt; techniques&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;p&gt;Course content is partially taken from the following sources:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Christopher Bishop’s &lt;a href=&quot;https://www.amazon.com/Pattern-Recognition-Learning-Information-Statistics/dp/0387310738&quot;&gt;Pattern Recognition and Machine Learning&lt;/a&gt; &amp;lt;- Comprehensive textbook on Probabilistic modelling with focus on Bayesian methods.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Andrew Ng’s Machine Learning class (&lt;a href=&quot;https://www.coursera.org/learn/machine-learning&quot;&gt;Coursera&lt;/a&gt; or &lt;a href=&quot;http://cs229.stanford.edu/&quot;&gt;CS229&lt;/a&gt;) &amp;lt;- Practical introduction to Machine Learning and common learning algorithms.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Stanford Univ’s &lt;a href=&quot;http://cs231n.stanford.edu/&quot;&gt;CS231n - ConvNet for Visual Recognition&lt;/a&gt; &amp;lt;- Practical course on Deep neural networks (DNN) with the context of computer vision problems.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;http://shakirm.com/?section=3&quot;&gt;Shakir Mohamed&lt;/a&gt;’s tutorial on Deep Generative Models in Deep Learning Summer School, 2016 &amp;lt;- Terrific summary of modelling principles and categorization of model classes. Also introduce recent advances in marrying Probabilistic modelling with DNN.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;a-namestudycourse-logisticsa&quot;&gt;&lt;a name=&quot;study&quot;&gt;Course logistics&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;2 sessions/week: 1x “&lt;strong&gt;Lecture&lt;/strong&gt;” session + 1x optional “&lt;strong&gt;Study-group&lt;/strong&gt;” session.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; &lt;strong&gt;&lt;em&gt;Lectures&lt;/em&gt;&lt;/strong&gt; are meant to lead you in the right direction — just to get your started. They are &lt;strong&gt;not&lt;/strong&gt; meant to tell you &lt;em&gt;everything&lt;/em&gt; in &lt;em&gt;every details&lt;/em&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Therefore you should utilize the reference reading materials, online resources for missing details &lt;em&gt;&amp;lt;- (the role of &lt;strong&gt;self-study&lt;/strong&gt;)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; It should be reckoned that we do not know everything (in &lt;em&gt;many cases&lt;/em&gt;, we don’t even know what we don’t know), so utilize the course instructors, the Teaching Assistant - TAs, your classmates for further support/discussion/…  &lt;em&gt;&amp;lt;- (the importance of &lt;strong&gt;Study-group&lt;/strong&gt;)&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;: Use comment sections in &lt;em&gt;relevant&lt;/em&gt; blog posts to reach this course instructor(s). The advantage: other audience (e.g. TAs, classmates, passing-by experts) can also contribute to your questions or discussion. Use email as secondary option.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;a-namenotescourse-notesa&quot;&gt;&lt;a name=&quot;notes&quot;&gt;Course notes&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;WEEK 1 - &lt;a href=&quot;https://raw.githubusercontent.com/hoamle/essence_ml/e788aef7617fed6911bcfd710ebbccd8ed34eae6/essence_ml.pdf&quot;&gt;Introduction&lt;/a&gt; (with &lt;a href=&quot;https://raw.githubusercontent.com/hoamle/essence_ml/e788aef7617fed6911bcfd710ebbccd8ed34eae6/essence_ml_with_notes.pdf&quot;&gt;Notes&lt;/a&gt;) &amp;amp; &lt;a href=&quot;/articles/17/primer-on-building-ml-solutions&quot;&gt;Primer on Building a Machine Learning solution&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;WEEK 2 - Principles of Modelling: Model structure, Learning framework&lt;/p&gt;
+
+&lt;p&gt;WEEK 3 - Principles of Modelling: Regularization, “Deep” Model structure&lt;/p&gt;
+
+&lt;p&gt;WEEK 4 - Bayesian inference&lt;/p&gt;
+
+&lt;p&gt;WEEK 5 - TBE&lt;/p&gt;
+</description>
+        <pubDate>Sat, 01 Oct 2016 00:00:00 +0000</pubDate>
+        <link>http://hoamle.github.io/articles/16/essence-machine-deep-learning</link>
+        <guid isPermaLink="true">http://hoamle.github.io/articles/16/essence-machine-deep-learning</guid>
+        
+        
+        <category>technical</category>
+        
+      </item>
+    
+      <item>
+        <title>Deep Art fun</title>
+        <description>&lt;p&gt;Last weekend I finally took some of personal photos and artwork to &lt;em&gt;&quot;paint&quot;&lt;/em&gt; them in, but not limited to, Van Gogh style. The &quot;painting&quot; part was actually done by &lt;a href=&quot;#deepart&quot;&gt;DeepArt algorithm&lt;/a&gt; - an inspiring application from &lt;strong&gt;Deep learning&lt;/strong&gt; research&lt;label for=&quot;sn-id-artomatix&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-id-artomatix&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;It’s worth to note that Artomatix, Inc. - an Irish startup - had introduced a &lt;a href=&quot;(https://youtu.be/un9lSayNOIY?t=51)&quot;&gt;similar work&lt;/a&gt; several months before DeepArt algorithm was published. &lt;/span&gt;. In short, the Deep learning model - a deep neural network - takes your photo (referred as &lt;strong&gt;&lt;em&gt;content-image&lt;/em&gt;&lt;/strong&gt; henceforth) and a reference style (combination of 1 or more &lt;strong&gt;&lt;em&gt;style-images&lt;/em&gt;&lt;/strong&gt;) as the inputs and produces your photo in that style.&lt;/p&gt;
+
+&lt;h2 id=&quot;demo&quot;&gt;Demo&lt;/h2&gt;
+&lt;p&gt;I used &lt;a href=&quot;https://github.com/jcjohnson/neural-style&quot;&gt;jcjohnson’s implementation&lt;/a&gt; of DeepArt algorithm for this demo.&lt;/p&gt;
+
+&lt;p&gt;Here we have the content-image on the top-left, the style-image is an artwork by artist Leonid Afremov on the top-right, and the photo generated in Afremov&#39;s style at the bottom.&lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/exeter.jpg&quot; height=&quot;150&quot; /&gt; &lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/Afremov2.jpg&quot; height=&quot;150&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/exeter-afremov2.png&quot; width=&quot;460&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The machine did not “paint” the picture out of the blue, it&#39;s an iterative learning process. In short, it starts with a blank (noisy) canvas and tries to learn prominent features in both content-image and style-image(s) and present them on the final product. That learning process is mathematically expressed as optimization process of a function representing the combined &lt;em&gt;similarity&lt;/em&gt; between the output and the inputs. Optimizing such function requires an algorithm which goes through series of updating iterations, visualized in the following gif.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/exeter_afremov2.gif&quot; width=&quot;460&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;more-images&quot;&gt;More images&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Note:&lt;/em&gt; Due to hardware constrainst, most of images below were generated from &lt;em&gt;non-optimal&lt;/em&gt; configs, thus did not yield their best output. I will be updating results from optimal configs soon enough.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Style image&lt;/strong&gt;: &lt;a href=&quot;https://www.behance.net/gallery/13033419/Selected-Artworks-2013-Oil-Acrylic-Watercolor&quot;&gt;creativemints&lt;/a&gt;&#39;s&lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/potr.jpg&quot; height=&quot;150&quot; /&gt; &lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/lostquilt_at_pinterest.jpg&quot; height=&quot;150&quot; /&gt;&lt;br /&gt;
+&lt;small&gt;produced by NIN model (non-optimal config)&lt;/small&gt;&lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/potr-lostquilt.png&quot; width=&quot;410&quot; /&gt; &lt;br /&gt;
+&lt;small&gt;produced by VGG-19 model (more optimal config)&lt;/small&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/img/lostquilt.png&quot; width=&quot;410&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(Old images)&lt;/em&gt; &lt;label for=&quot;mn-hardware&quot; class=&quot;margin-toggle&quot;&gt; ⊕&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mn-hardware&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;Technical bit:&lt;/em&gt; Old images were produced by NIN model + Adam optimization. If hardware constrainst is not a problem, visual results should be &lt;em&gt;considerably &lt;strong&gt;improved&lt;/strong&gt;&lt;/em&gt;  by using VGG-19 model + L-BFGS optimization. &lt;/span&gt;&lt;br /&gt;
+&lt;strong&gt;Style image&lt;/strong&gt;: Leonid Afremov&#39;s&lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/pedals.jpg&quot; height=&quot;150&quot; /&gt; &lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/Afremov4.jpg&quot; height=&quot;150&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/pedals-afremov4.png&quot; width=&quot;460&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Style image&lt;/strong&gt;: Van Gogh&#39;s Starry Night &lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/exe_quay.jpg&quot; height=&quot;150&quot; /&gt; &lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/starry_night.jpg&quot; height=&quot;150&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/exe_quay-starrynight.png&quot; width=&quot;495&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Style image&lt;/strong&gt;: Van Gogh&#39;s Starry Night&lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/london.jpg&quot; height=&quot;150&quot; /&gt; &lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/starry_night.jpg&quot; height=&quot;150&quot; /&gt; &lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/london-starry.png&quot; width=&quot;495&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Style image&lt;/strong&gt;: Van Gogh&#39;s Wheat Field with Crows&lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/camb.jpg&quot; height=&quot;150&quot; /&gt; &lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/vangogh_Wheat_Field_with_Crows.jpg&quot; height=&quot;150&quot; /&gt; &lt;br /&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/camb-vangogh_wheatfield.png&quot; width=&quot;575&quot; /&gt;&lt;/p&gt;
+
+&lt;!-- 
+**Style image**: Picasso\&#39;s Self-portrait
+&lt;br/&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/content-imgs/figure.jpg&quot; height=&quot;300&quot;&gt; &lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/style-imgs/picasso_selfport1907.jpg&quot; height=&quot;300&quot;&gt; =&gt; 
+&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/neural-style-example/master/visually-appealing/figure-picasso_selfportr.png&quot; height=&quot;400&quot;&gt;
+ --&gt;
+
+&lt;h2 id=&quot;observation&quot;&gt;Observation&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Size matters&lt;/strong&gt;. The higher the output image resolution, the more details in the content-image can be explicitly expressed by the indicated style. However, memory is a &lt;em&gt;big&lt;/em&gt; trade-off. Default output image size (max. 512px-wide) on an NIN took as small as 5-600MB, but a 784px image devours 3 times as much!&lt;/li&gt;
+  &lt;li&gt;For visual appeal, (i) an &lt;strong&gt;expressive&lt;/strong&gt; style and/or (ii) &lt;strong&gt;resemblance&lt;/strong&gt; between content-&lt;strong&gt;Style image&lt;/strong&gt; pair is the key. &quot;Expressive&quot; here is not only about abstract or surreal in specific, but about texture i.e. discernible patterns in colors, strokes, blobs in general. Example work: &lt;em&gt;Leonid Afremov&#39;s painting, The Scream, Monet&#39;s water lilies,&lt;/em&gt; etc. Eventually, using style-images referenced from complicated realism pieces by the old masters, e.g. Jean Leon Gerome, usually  yields unsatisfiying results. Secondly, although not always, content- and style-images of similar semantics pair well with each other. For example, a landscape picture should play along well with Starry Night or Wheat Field and the Crows; a portrait and one of Picasso&#39;s self-portraits also make a nice combination.&lt;/li&gt;
+  &lt;li&gt;I drool over a Titan X.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;hardware-setup&quot;&gt;Hardware setup&lt;/h2&gt;
+&lt;p&gt;The main work-horse is a humble 2GB nVidia GTX 660 GPU&lt;label for=&quot;sn-gpu&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-gpu&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;i.e. common video graphic card for gaming &lt;/span&gt; plugged in a dated LGA 775 desktop. &lt;del&gt;Each image was generated in ~90 seconds (for a 512px-image) or 2-3 mins (for a 784px-image)&lt;/del&gt;&lt;label for=&quot;sn-id-advances&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-id-advances&quot; class=&quot;margin-toggle&quot; /&gt;&lt;span class=&quot;sidenote&quot;&gt;&lt;a href=&quot;https://github.com/jcjohnson/fast-neural-style&quot;&gt;Recent advances&lt;/a&gt; have largely reduce generation time down to just &lt;em&gt;a few seconds&lt;/em&gt; &lt;/span&gt;. GPU(s) with generous memory is desirable.&lt;/p&gt;
+
+&lt;p&gt;It&#39;s &lt;em&gt;much&lt;/em&gt; faster to run DeepArt algorithm on GPU(s) instead of common CPUs. Even a modern i7 K-series can take upto hour to train and generate 1 image of above sizes. However, running on CPU can take advantages of &lt;em&gt;abundant&lt;/em&gt; host memory (easily &amp;gt;8GB on a single machine), not to mention the possibility to be accompanied with a coprocessor (eg: Xeon Phi), or running on distributed platform.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-namerefsreferencesa&quot;&gt;&lt;a name=&quot;refs&quot;&gt;References&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a name=&quot;deepart&quot;&gt;&lt;a href=&quot;http://arxiv.org/abs/1508.06576&quot;&gt;A Neural Algorithm of Artistic Style&lt;/a&gt; (Gatys et al, 2015) i.e. DeepArt algorithm
+&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 16 Jan 2016 00:00:00 +0000</pubDate>
+        <link>http://hoamle.github.io/articles/16/deep-art-fun</link>
+        <guid isPermaLink="true">http://hoamle.github.io/articles/16/deep-art-fun</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Simple Language Model</title>
+        <description>&lt;p&gt;This is an implementation of Geoffrey Hinton&#39;s Neural Networks Programming Assigment 2 on &lt;a href=&quot;https://www.coursera.org/course/neuralnets&quot;&gt;Coursera&lt;/a&gt; in Python with GPU support by Theano. The assignment was about training a feed-forward neural networks, in order to predict the next word from 3 previous words. Training took ~10s/epoch with default parameters on a GTX 660 GPU. On the other hand, training took ~100s/epoch on a Core 2 Duo E7300 @2.67GHz CPU with the original Octave/MATLAB implementation (10x slower!).&lt;/p&gt;
+
+&lt;p&gt;Source code is on &lt;a href=&quot;https://github.com/hoamle/Neural-Net-PA2&quot;&gt;GitHub&lt;/a&gt;. Any suggestions are welcomed.&lt;/p&gt;
+
+&lt;h2 id=&quot;files-in-the-repo&quot;&gt;Files in the repo&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;data.mat&lt;/code&gt;: data file that includes training, validation, and testing set for the model&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;wordModel.ipynb&lt;/code&gt;: IPython Notebook that records the main ingredients, notes, and thought when I built the implementation,&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;wordModel.py&lt;/code&gt;: the implementation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Pre-requisites: Python 2.7+, Theano, CUDA 7 (optional, for training by GPU)&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 python wordModel.py&lt;/code&gt; in the terminal. Let &lt;code class=&quot;highlighter-rouge&quot;&gt;device=cpu&lt;/code&gt; if you want to train by CPU.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;issues&quot;&gt;Issues&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;test_model&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;validate_model&lt;/code&gt; compute &lt;code class=&quot;highlighter-rouge&quot;&gt;cost&lt;/code&gt; (average cross-entropy) on batches of test set and validation set, not the whole sets respectively. Difference should not be significant though.&lt;/li&gt;
+  &lt;li&gt;Original momentum expression did not yield expeceted cross-entropy for some reason. I had to use an alternative from &lt;a href=&quot;http://ufldl.stanford.edu/tutorial/supervised/OptimizationStochasticGradientDescent/&quot;&gt;Stanford Deep Learning Tutorial&lt;/a&gt; (see Momentum section).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://deeplearning.net&quot;&gt;deeplearning.net&lt;/a&gt; tutorials and &lt;a href=&quot;http://nbviewer.ipython.org/github/craffel/theano-tutorial/blob/master/Theano%20Tutorial.ipynb#example-mlp&quot;&gt;this&lt;/a&gt; for building Python code.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://ufldl.stanford.edu/tutorial/supervised/OptimizationStochasticGradientDescent/&quot;&gt;Stanford Deep Learning Tuttorial&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 21 Jul 2015 00:00:00 +0000</pubDate>
+        <link>http://hoamle.github.io/articles/15/simple-language-model-coursera</link>
+        <guid isPermaLink="true">http://hoamle.github.io/articles/15/simple-language-model-coursera</guid>
+        
+        
+        <category>technical</category>
+        
+      </item>
+    
+      <item>
+        <title>Toolbar-Creator template for Photoshop and ClipStudio Paint</title>
+        <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;for Photoshop (R) and ClipStudio Paint aka. Manga Studio (R)&lt;/em&gt;&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+on &lt;a href=&quot;https://github.com/hoamle/Toolbar-Creator&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Toolbar Creator&lt;/strong&gt; is one of few especially useful on-screen toolbars for Windows Tablet PCs. It makes using Windows tablets without keyboard much more comfortable and convenient. The software is developed by &lt;a href=&quot;http://forum.tabletpcreview.com/threads/toolbar-creator-v-2-2-beta-available-for-download.63014/&quot;&gt;&lt;strong&gt;lblb&lt;/strong&gt;&lt;/a&gt; at TabletPC Review forum, which is a user-friendly interface for &lt;code class=&quot;highlighter-rouge&quot;&gt;RawInputControlTest&lt;/code&gt; script by &lt;a href=&quot;http://39kasen.sakura.ne.jp/rawinputcontroltest/&quot;&gt;&lt;strong&gt;koide&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This repository is a toolbar &lt;em&gt;template&lt;/em&gt;, specifically designed for painting in Adobe (R) Photoshop (R) and ClipStudio Paint aka. Manga Studio (R). Icon design is kindly provided by &lt;a href=&quot;http://forum.tabletpcreview.com/threads/slatepal-dock-developing.54774/&quot;&gt;&lt;strong&gt;gahfe&lt;/strong&gt;&lt;/a&gt; at TabletPC Review forum. The template was created, &lt;strong&gt;&lt;em&gt;assuming&lt;/em&gt;&lt;/strong&gt; that modifier keys (Ctrl, Alt, Shift) reside on an external harware device, eg. keyboard, tablet buttons, gamepad etc. I have mine on a Zeemote controller.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://imgur.com/Z8ivi4l&quot;&gt;&lt;img src=&quot;https://i.imgur.com/Z8ivi4l.jpg&quot; width=&quot;256&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;screenshot&quot;&gt;Screenshot&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/Toolbar-Creator/master/v2_2_b5/v2_2_b5.png&quot; alt=&quot;Screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;logs&quot;&gt;Logs&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;template for v2.2 beta 5 with more buttons added&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Download and extract this repo
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;(for non-GitHub users):&lt;/em&gt; click &lt;a href=&quot;https://github.com/hemiolan/Toolbar-Creator/archive/master.zip&quot;&gt;here&lt;/a&gt;, extract the downloaded file into a folder, and go into &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Toolbar-Creator-master&lt;/code&gt;&lt;/strong&gt; folder.&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;(for GitHub users):&lt;/em&gt; simply &lt;code class=&quot;highlighter-rouge&quot;&gt;clone&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Copy and paste folder &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;[version]\Files&lt;/code&gt;&lt;/strong&gt; into your &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Toolbar Creator&lt;/code&gt;&lt;/strong&gt; folder. Replace &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;[version]&lt;/code&gt;&lt;/strong&gt; with either &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v2_1&lt;/code&gt;&lt;/strong&gt; or &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v2_2_b5&lt;/code&gt;&lt;/strong&gt; accordingly to your existing &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Toolbar Creator&lt;/code&gt;&lt;/strong&gt; version.&lt;/li&gt;
+  &lt;li&gt;Replace/Merge all existing files/folders if prompted.&lt;/li&gt;
+  &lt;li&gt;Launch Toolbar Creator and change the current toolbar to &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;painting&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Fri, 31 Oct 2014 00:00:00 +0000</pubDate>
+        <link>http://hoamle.github.io/articles/14/toolbar-creator-template-clipstudio-paint</link>
+        <guid isPermaLink="true">http://hoamle.github.io/articles/14/toolbar-creator-template-clipstudio-paint</guid>
+        
+        
+        <category>arts</category>
+        
+      </item>
+    
+      <item>
+        <title>TouchKey template for Photoshop</title>
+        <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;for Photoshop (R)&lt;/em&gt;&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+on &lt;a href=&quot;https://github.com/hoamle/TouchKey&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TouchKey&lt;/strong&gt; is one of few especially useful on-screen toolbars for Windows Tablet PCs. It makes using Windows tablets without keyboard much more comfortable. The software is developed by &lt;a href=&quot;http://kannagi.net/touchkey/&quot;&gt;&lt;strong&gt;kannagi&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This repository is a toolbar &lt;em&gt;template&lt;/em&gt;, specifically designed for painting in Adobe (R) Photoshop (R). Icon design is kindly provided by &lt;a href=&quot;http://forum.tabletpcreview.com/threads/artdock-for-the-samsung-series-7-slate.47958/&quot;&gt;&lt;strong&gt;Konartist3D&lt;/strong&gt;&lt;/a&gt; and &lt;a href=&quot;http://forum.tabletpcreview.com/threads/artdock-guide-compatibility-and-links.58400/page-6#post-413194&quot;&gt;&lt;strong&gt;dream3&lt;/strong&gt;&lt;/a&gt; at TabletPC Review forum.&lt;/p&gt;
+
+&lt;h2 id=&quot;screenshot&quot;&gt;Screenshot&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/hoamle/TouchKey/master/preview.png&quot; alt=&quot;Screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Make a backup of &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;macro.txt&lt;/code&gt;&lt;/strong&gt; (inside your &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;TouchKey&lt;/code&gt;&lt;/strong&gt; folder).&lt;/li&gt;
+  &lt;li&gt;Download and extract this repo
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;(for non-GitHub users):&lt;/em&gt; click &lt;a href=&quot;https://github.com/hemiolan/TouchKey/archive/master.zip&quot;&gt;here&lt;/a&gt;, extract the downloaded file into a folder, and go into &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;TouchKey-master&lt;/code&gt;&lt;/strong&gt; folder.&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;(for GitHub users):&lt;/em&gt; simply &lt;code class=&quot;highlighter-rouge&quot;&gt;clone&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Copy and paste &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;img&lt;/code&gt;&lt;/strong&gt; folder and &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;macro.txt&lt;/code&gt;&lt;/strong&gt; into your &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;TouchKey&lt;/code&gt;&lt;/strong&gt; folder. Replace/Merge all existing files/folders if prompted.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Tue, 07 Oct 2014 00:00:00 +0000</pubDate>
+        <link>http://hoamle.github.io/articles/14/touchkey-template-for-photoshop</link>
+        <guid isPermaLink="true">http://hoamle.github.io/articles/14/touchkey-template-for-photoshop</guid>
+        
+        
+        <category>arts</category>
+        
+      </item>
+    
+      <item>
+        <title>Hello World</title>
+        <description>&lt;p&gt;Hello world for the $n+1$ times. This post will serve as a repo for troubleshooting blogging problems.&lt;/p&gt;
+
+&lt;h3 id=&quot;convert-between-different-sources&quot;&gt;Convert between different sources&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;HTML to MarkDown: &lt;code class=&quot;highlighter-rouge&quot;&gt;pandoc input.html -o output.md --parse-raw&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;markdown-editors&quot;&gt;Markdown editors&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/SublimeText-Markdown/MarkdownEditing&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MarkdownEditting&lt;/code&gt;&lt;/a&gt; for Sublime Text&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;knitr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## Warning: package &#39;knitr&#39; was built under R version 3.3.2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;set.seed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;123&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rnorm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## [1] -0.56047565 -0.23017749  1.55870831  0.07050839  0.12928774
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Does &lt;strong&gt;knitr&lt;/strong&gt; work with Python? Use the chunk option &lt;code class=&quot;highlighter-rouge&quot;&gt;engine=&#39;python&#39;&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;hello, python world!&#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39; &#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## hello, python world!
+## [&#39;hello,&#39;, &#39;python&#39;, &#39;world!&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Mon, 08 Sep 2014 00:00:00 +0000</pubDate>
+        <link>http://hoamle.github.io/articles/14/hello-world</link>
+        <guid isPermaLink="true">http://hoamle.github.io/articles/14/hello-world</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
