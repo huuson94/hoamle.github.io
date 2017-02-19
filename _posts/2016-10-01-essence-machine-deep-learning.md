@@ -11,12 +11,10 @@ This short course aims to introduce new starters to the field of *Machine Learni
 *Intended learning objectives*: (i) understand and know what constitute of the high-level ML concepts below; (ii) be able to navigate new ML concepts in [the Map of Machine Learning](#map); (iii) - *optionally* - articulate the math behind each model or concept, and implement the ML models/algorithms covered in the course properly (expected from students who do the homework and ["Study-group" sessions](#study))
 
 ## <a name="map">Core ML concepts</a>
-{% marginnote 'mn-map' 'TODO draw the Map' %} We will cover the following *high-level* concepts (*note*: if not stated otherwise, concepts in ***bold italic*** are covered in the prelim course. [Course notes](#) will be updated in respective blog posts). 
+{% marginnote 'mn-map' 'TODO draw the Map' %} We will cover the following *high-level* concepts (*note*: if not stated otherwise, concepts in ***bold italic*** are covered in the prelim course. [Course notes](#notes) will be updated in respective blog posts). 
 
 ### Build a Machine Learning model
-**Design principle**: 
-
-> Model {% sidenote 'sn-model' '*"Model is a simplification of reality"*. Formulate real-life problems as ***parametric models*** (non-parametric models/methods are not covered in this training course series)' %} = Data Type + Model "Structure"{% sidenote 'sn-structure' 'Relationships between model elements: data, parameters, and hyperparameters.  Relationships can either be *deterministic* or *stochastic*, and are visualized graphically by ***graphical models***.' %} + Learning Framework{% sidenote 'sn-framework' 'Examples: ***probabilistic modelling***, *metric learning* (not covered in prelim course)' %}
+**Design principle**: Model {% sidenote 'sn-model' '*"Model is a simplification of reality"*. Formulate real-life problems as ***parametric models*** (non-parametric models/methods are not covered in this training course series)' %} = Model "Structure"{% sidenote 'sn-structure' 'Relationships between model elements: data, parameters, and hyperparameters.  Relationships can either be *deterministic* or *stochastic*, and are visualized graphically by ***graphical models***.' %} + Learning Framework{% sidenote 'sn-framework' 'Examples: ***probabilistic modelling***, *metric learning* (not covered in prelim course)' %}
 
 ***Learning task*** and ***Inference task(s)***{% sidenote 'sn-estimate' 'Find/compute *unknown* parameter and/or ***latent variable*** estimates (*learning task*) of the model, and other quantities of interest (*inference tasks*), e.g. predictive outcomes, posterior distribution of model parameters, etc.' %} 
 
@@ -41,9 +39,9 @@ This short course aims to introduce new starters to the field of *Machine Learni
 ## References
 Course content is partially taken from the following sources:
 
-> Andrew Ng's Machine Learning class ([Coursera](https://www.coursera.org/learn/machine-learning) or [CS229](http://cs229.stanford.edu/)) <- Practical introduction to Machine Learning and common learning algorithms.
+> Christopher Bishop's [Pattern Recognition and Machine Learning](https://www.amazon.com/Pattern-Recognition-Learning-Information-Statistics/dp/0387310738) <- Comprehensive textbook on Probabilistic modelling with focus on Bayesian methods.
 
-> Christopher Bishop's [Pattern Recognition and Machine Learning](https://www.amazon.com/Pattern-Recognition-Learning-Information-Statistics/dp/0387310738) <- Comprehensive textbook on Probabilistic modelling.
+> Andrew Ng's Machine Learning class ([Coursera](https://www.coursera.org/learn/machine-learning) or [CS229](http://cs229.stanford.edu/)) <- Practical introduction to Machine Learning and common learning algorithms.
 
 > Stanford Univ's [CS231n - ConvNet for Visual Recognition](http://cs231n.stanford.edu/) <- Practical course on Deep neural networks (DNN) with the context of computer vision problems.
 
@@ -59,3 +57,14 @@ Course content is partially taken from the following sources:
 `>` It should be reckoned that we do not know everything (in *many cases*, we don't even know what we don't know), so utilize the course instructors, the Teaching Assistant - TAs, your classmates for further support/discussion/...  *<- (the importance of **Study-group**)* 
 
 > **Tip**: Use comment sections in *relevant* blog posts to reach this course instructor(s). The advantage: other audience (e.g. TAs, classmates, passing-by experts) can also contribute to your questions or discussion. Use email as secondary option.
+
+## <a name="notes">Course notes</a>
+WEEK 1 - Motivated examples & [Primer on Building a Machine Learning solution](/articles/17/primer-on-building-ml-solutions)
+
+WEEK 2 - Principles of Modelling: Model structure, Learning framework
+
+WEEK 3 - Principles of Modelling: Regularization, more on Model structure
+
+WEEK 4 - TBE
+
+WEEK 5 - TBE

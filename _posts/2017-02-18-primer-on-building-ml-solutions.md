@@ -3,19 +3,19 @@ title: "Primer on Building a Machine Learning Solution"
 layout: post
 category: technical
 ---
-
 This week introduces **high-level overview of building a Machine Learning (ML) solution** for a problem, summarized by the following diagram and demo'ed with [`scikit-learn`](http://scikit-learn.org/stable/index.html).
 {% maincolumn 'assets/img/week1-2.png' '' %}
 
 
-**N.B.**{% marginnote 'mn-id-glossary' "Visit [MLglossary](https://hoamle.github.io/articles/17/machine-learning-appendix/#glossary) for a summary of the math notations. Because ML is an interdisplinary field, there are many ML terminologies that are equivalent. The MLglossary also lists common terms and their synonyms or strongly related concepts." %} We will gradually *rephrase* every-day language with equivalent ML terminologies and their *math notations*. 
+**N.B.**{% marginnote 'mn-id-glossary' "Visit [MLglossary](https://hoamle.github.io/articles/17/machine-learning-appendix/#glossary) for a summary of the math notations. The MLglossary also lists common terms in ML with their synonyms or strongly related concepts. Because ML is an interdisplinary field, there are many different terminologies, which come from the relevant fields of research, that are actually *equivalent*." %} We will gradually *rephrase* every-day language with equivalent ML terminologies and their *math notations*.
 
 Don't be afraid of Math, embrace it. Math is (1) an **efficient, universal and unanimously understood** language. Once we rephrase a problem in mathematical toungue, we may see hidden  connections between numerous of *supposedly* unrelated problems in different fields [[DAslides:pp22-38]](https://1drv.ms/b/s!ApOZHae4ogqZ3AJg76xtDPEzSlH-). Further more, Math is (2) **non-ambiguous** so that we can approach a solution of a problem with transparent and concrete reasoning. Nevertheless, always explain the math we use (or encounter) in our usual natural language if possible, so that we can imprint the **underlying intuition** and not getting lost in the technical details that follow.
 
+> *Author's comment*: Machines are born "dumb". The more *we* - as human being - want more intelligent machines that can support us without much of the human's guidance, the more we need to mentor them by, at least, speaking explicitly in a language that machines can understand. Math is a much more machine-understandable language than our every-day natural languages. Lesson: there is no escaping from math if we want to advance in ML.
 
 ## Case-study
 
-**Identify a flower type based on its attributes**, *such as petal length, sepal width, ...*
+**Identify a flower type based on its attributes** which include petal and sepal size.
 <small>Ref: [http://scikit-learn.org/stable/tutorial/basic/tutorial.html](http://scikit-learn.org/stable/tutorial/basic/tutorial.html)</small>
 
 <img src="{{ site.github.url }}/assets/img/Petal-sepal.jpg" width="510"> 
@@ -84,7 +84,7 @@ Observe:
 
 `>` All 4 features' measures are conceptually similar (numeric, real values that lie in the same domain), so no **data normalization**{% marginnote 'mn-norm' "*data normalization*" %} required.
 
-`>` There are $$K=3$$ types i.e. **classes**{% marginnote 'mn-class' "*(multi-)class, single-label*" %} of flower, which are `setosa`, `versicolor`, and  `virginica` - represented by ID `0`, `1`, `2` respectively. Note: each flower is **labelled** by a *single* ID, indicating that a flower can only be member of 1 type.
+`>` There are $$K=3$$ types i.e. **classes**{% marginnote 'mn-class' "*class, label*" %} of flower, which are `setosa`, `versicolor`, and  `virginica` - represented by ID `0`, `1`, `2` respectively. Note: each flower is **labelled** by a *single* ID, indicating that a flower can only be member of 1 type.
 
 
 
@@ -139,7 +139,7 @@ Now we can define our problem more precisely by the language of math
 
 ### Define the problem
 
-Given any attribute $$x$$, we would like to **predict** a corresponding prediction $$\hat{y}\in$$  {`setosa`, `versicolor`, `virginica`} by a ML **Model**. In order to know if our model has good predictive performance, we need an **Assessment** to measure the performance.  In this problem, we can measure the performance by an **evaluation metric**{% marginnote 'mn-metric' '*evaluation metrics*' %} called [*Accuracy*](http://scikit-learn.org/stable/modules/model_evaluation.html#accuracy-score), which
+Given any attribute $$x$$, we would like to **predict** a corresponding prediction $$\hat{y}\in$$  {`setosa`, `versicolor`, `virginica`} by a ML `Model` In order to know if our model has good predictive performance, we need an `Assessment` to measure the performance.  In this problem, we can measure the performance by an **evaluation metric**{% marginnote 'mn-metric' '*evaluation metrics*' %} called [*Accuracy*](http://scikit-learn.org/stable/modules/model_evaluation.html#accuracy-score), which
 
 {% math %}\text{Accuracy}=\dfrac{1}{N}\sum_{n}\mathbb{1}\left(\hat{y}^{\left(n\right)}=y^{\left(n\right)}\right){% endmath %}
 
@@ -293,7 +293,7 @@ for i in xrange(len(test_idx)):
     73      1       1       True    
     146     2       2       True    
 
-Our model correctly indentifies 29 examples and makes 1 errors out of 30 testing examples, achieving an Accuracy of $$\dfrac{1}{N}_{\text{test}}\sum_{n}\mathbb{1}\left(\hat{y}^{\left(n\right)}=y^{\left(n\right)}\right)=29/30=96.7\%$$ 
+Our model correctly indentifies 29 examples and makes 1 error out of 30 testing examples, achieving an Accuracy of $$\dfrac{1}{N}_{\text{test}}\sum_{n}\mathbb{1}\left(\hat{y}^{\left(n\right)}=y^{\left(n\right)}\right)=29/30=96.7\%$$ 
 
 
 
@@ -311,11 +311,15 @@ sum(Y_pred == D_test['Y']) / float(len(test_idx))
 To summarize, we have completed the most basic steps to build a ML solution for our problem as specified by this diagram
 {% maincolumn 'assets/img/week1-2.png' '' %}
 
-Specifically, we used and trained a Softmax Regression `Model`, and did `Assessment` on a *single* split of test set. However, there still exist *fundamental* questions that we need to address:
-1. Is $$96.7\%$$ a *reliable* estimate for our model accuracy on **other test sets**?{% sidenote 'sn-id-assess' "TODO link to Lecture 4" %}
-2. How is Softmax Regression model **constructed**?{% sidenote 'sn-id-buildmodel' "TODO link to Lecture 2" %}
-3. In a problem for which **assumptions** imposed by Softmax Regression model do **not suffice**, how can we do better?{% sidenote 'sn-id-nonlinear' "TODO link to Lecture 3" %}
-4. *(other issues that would arise when approaching above questions)*
+Specifically, we studied a (single-label) `multi-class classification`{% sidenote 'sn-id-slmc' "When ones refer to a `multi-class classification` problem, we implicit understand that it is a single-label problem. The more generalized classification problem is called `multi-label multi-class classification`, which we will not cover in this series." %} problem which require us to build a ML model that can predict a flower type based on its sepal and petal measurements. As a solution for this problem, we used and trained a Softmax Regression `Model`, did `Assessment` on *one* split of test set, measured the performance with Accuracy metric, and achieved impressive predictive Accuracy of $$96.7\%$$. 
+
+However, there still exist **fundamental** questions that we need to address:
+
+1. Is $$96.7\%$$ a *reliable* estimate for our model accuracy on **other test sets**?{% sidenote 'sn-id-assess' "TODO link to Part 4" %}
+2. How is Softmax Regression model **constructed**?{% sidenote 'sn-id-buildmodel' "TODO link to Part 2" %}
+3. In a problem for which **assumptions** imposed by Softmax Regression model do **not suffice**, how can we do better?{% sidenote 'sn-id-nonlinear' "TODO link to Part 3" %}
+4. How can *we* - as the human - **interpret** the contribution of the features to the prediction, or extract human-perceivable semantics that the features may hold? {% sidenote 'sn-id-nonlinear' "TODO link to Part 5" %}
+5. (other issues that would arise when approaching above questions)
 
 
-These questions will define the topics for next parts of this series.
+These questions define the topics for next parts of this series. In each part, we will be approaching different *multi-class classification* problems as case-studies for the relevant topics. The same reasoning and principles also straightforwardly apply to *binary classification*, *regression*, and *clustering* problems, which is left as homework for the readers.
