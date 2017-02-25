@@ -40,7 +40,7 @@ If no information provided i.e. P(y) {marginnote prior} =>  prior knowledge,  ca
 
 If there is information provided i.e. P(y|x) {marginnote posterior} => update the model knowledge given more data to produce more accurate predicition => translated to the mathematical tools by using distribution P(y|x) => these distribution conditioned on more information are called **posterior distributions**
 
-* score function: [[cs229:notes1:9,9.3]](TODO)
+* score function: [[cs229:notes1:III-9,9.3]](TODO)
 
 ### Learning Framework
 

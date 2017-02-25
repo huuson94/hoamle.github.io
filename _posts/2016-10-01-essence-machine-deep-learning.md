@@ -16,7 +16,7 @@ This short course aims to introduce new starters to the field of *Machine Learni
 ### Build a Machine Learning model
 **Design principle**: Model {% sidenote 'sn-model' '*"Model is a simplification of reality"*. Formulate real-life problems as ***parametric models*** (non-parametric models/methods are not covered in this training course series)' %} = Model "Structure"{% sidenote 'sn-structure' 'Relationships between model elements: data, parameters, and hyperparameters.  Relationships can either be *deterministic* or *stochastic*, and are visualized graphically by ***graphical models***.' %} + Learning Framework{% sidenote 'sn-framework' 'Examples: ***probabilistic modelling***, *metric learning* (not covered in prelim course)' %}
 
-***Learning task*** and ***Inference task(s)***{% sidenote 'sn-estimate' 'Find/compute *unknown* parameter and/or ***latent variable*** estimates (*learning task*) of the model, and other quantities of interest (*inference tasks*), e.g. predictive outcomes, posterior distribution of model parameters, etc.' %} 
+***Learning task*** and ***Inference task(s)***{% sidenote 'sn-estimate' 'Find/compute point estimates of *unknown* parameters (*learning task*) of the model, and other quantities of interest (*inference tasks*), e.g. posterior distribution of model parameters, predictive outcomes, etc.' %} 
 
 ### Evaluate performance of a model
 
@@ -32,7 +32,7 @@ This short course aims to introduce new starters to the field of *Machine Learni
 `>` to achieve [other objectives](https://en.wikipedia.org/wiki/Regularization*(mathematics)).
 
 ### Optimize for more performance
-***Model selection*** and *Model ensemble* techniques
+***Model selection*** and *Ensemble* techniques
 
 
 
